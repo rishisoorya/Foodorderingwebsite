@@ -1,59 +1,60 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-
-const cartSchema = new Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+const cartSchema = new Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
     },
-    restaurant: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Restaurant",
-        required: true
+    restaurantId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Restaurant",
+      required:true,
     },
     items: [
-        {
-            menuItem: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Menu",
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                min: 1,
-                default: 1,
-            },
-            itemTotal: {
-                type: Number,
-                required: true,
-                min: 0,
-            }
-        }
+      {
+        foodId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "MenuItem",
+          required: true,
+        },
+        
+        quantity: {
+          type: Number,
+          required: true,
+          min: 1,
+          default: 1,
+        },
+        totalItemPrice: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+      },
     ],
-    cartTotal: {
-        type: Number,
-        required: true,
-        min: 0,
-        default: 0,
+    totalPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
     },
-    cartFinalTotal: {
-        type: Number,
-        required: true,
-        min: 0,
-        default: 0,
+    finalPrice: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0,
     },
-    status: {
-        type: String,
-        enum: ["pending", "completed", "cancelled"],
-        default: "pending",
+    cartStatus:{
+      type: String,
     }
-}, { timestamps: true });
+  },
+
+  { timestamps:true }
+);
 
 cartSchema.method.calulateTotalPrice = function(){
-    this.totalPrice = this.items.reduce((total,items)=> total + items.price,0);
-  }
+  this.totalPrice = this.items.reduce((total,items)=> total + items.price,0);
+}
 
 export const Cart = mongoose.model("Cart", cartSchema);

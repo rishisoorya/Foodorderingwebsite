@@ -1,144 +1,120 @@
+import{User}from "../models/userModel.js"
 import bcrypt from "bcryptjs";
-import { User } from "../models/userModel.js";
-import { createToken } from "../utils/token.js";
+import { createToken } from "../utils/token.js"; 
 
 export async function signUp(req, res) {
   try {
-    const { name, email, number, password, profilePic, role } = req.body;
-
-    if (!name || !email || !number || !password) {
+    const { name, email, phone, password, profilePic, role } = req.body;
+    if (!name || !email || !phone || !password) {
       return res.status(400).json({ message: "All Fields Required" });
     }
-
-    // Check if user with the same email or phone exists
-    const userExist = await User.findOne({ $or: [{ email }, { number }] });
+    const userExist = await User.findOne({ email: email });
     if (userExist) {
-      return res.status(400).json({ message: "Email or Phone already registered" });
+      return res.status(400).json({ message: "User Already Exists" });
     }
-
-    // Hash password asynchronously
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+    const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = new User({
       name,
       email,
-      number,
+      phone,
       password: hashedPassword,
       profilePic,
       role,
     });
-
     await newUser.save();
-
-    // Generate token
     const token = createToken(newUser);
-
-    // Set cookie with token
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Set secure flag in production
-      sameSite: "Strict",
-    });
-
-    return res.status(201).json({ message: "Signed Up Successfully"});
+    res.cookie("token", token, { httpOnly: true });
+    res.status(201).json({ message: "Signed Up Successfully" });
   } catch (error) {
-    console.error("Signup Error:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
-export async function logIn(req, res) {
+
+export async function login(req, res) {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
-      return res.status(400).json({ message: "Please fill in all fields" });
+      return res.status(404).json({ message: "Fill All Required Fields" });
     }
-
-    const user = await User.findOne({ email });
-
+    const user = await User.findOne({ email: email });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User Not Found" });
     }
-
-    const passwordChecking = bcrypt.compareSync(password, user.password);
-    
-    if (!passwordChecking) {
-      return res.status(400).json({ message: "Incorrect password" });
+    const isPasswordMatch = bcrypt.compareSync(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(400).json({ message: "Wrong Password" });
     }
-
     const token = createToken(user);
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", 
-      sameSite: "Strict",
-    });
-
-    return res.status(200).json({ message: "Logged in successfully"});
+    res.cookie("token", token, { httpOnly: true });
+    res.status(200).json({ message: "Logged in Successfully" });
   } catch (error) {
-    console.error("Login Error:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
-export async function profileChange(req,res) {
 
+export async function profileUpdate(req, res) {
   try {
-    const {email,name,number,profilePic} = req.body;
-    const userId = req.user.id 
-    if (!userId){
-      return res.status(401).json({message:"no user found"});
+    const { name, email, phone, profilePic } = req.body;
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized User" });
     }
     const user = await User.findByIdAndUpdate(
       userId,
-      {name,number,profilePic,email},
-      {new:true}
-    )
-
-   
-return res.status(200).json({message:"updated profile",user})
+      { name, email, phone, profilePic },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "profile updated Successfully", user });
   } catch (error) {
-    console.error("Login Error:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-  
-  
-}
-export async function getingRole(req,res) {
-  try {
-  
-    const user = await User.findById(req.user.id).select("role")
-    if (!user){
-      return res.status(404).json({message:"user not found"})
-    }
-    res.status(200).json({message:"user found",user})
-  } catch (error) {
-    console.error("error while fetching role",error)
-    return res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
-export async function profile(req,res) {
+export async function getProfile(req, res) {
   try {
-  
-    const user = await User.findById(req.user.id).select("-role")
-    if (!user){
-      return res.status(404).json({message:"user not found"})
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized User" });
     }
-    res.status(200).json({message:"user found",user})
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "Unable To Find User" });
+    }
+    res.status(200).json({ message: "User Profile Fetched Sucessfully", user });
   } catch (error) {
-    console.error("error while fetching role",error)
-    return res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export async function getRole(req, res) {
+  try {
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized User" });
+    }
+    const user = await User.findById(userId).select("role");
+    if (!user) {
+      return res.status(404).json({ message: "Unable To Find User" });
+    }
+    res.status(200).json({ message: "Role Fetched Sucessfully", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
 export async function logout(req,res) {
   try {
     res.clearCookie("token")
-    res.status(200).json({message:"logout sucessfully"})
+    res.status(200).json({message:"Logged Out Succesfully"})
   } catch (error) {
-    console.error("logout error",error)
-    return res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-    
-  }
-  
+}

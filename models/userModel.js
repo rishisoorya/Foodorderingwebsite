@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
-  name: { type: String, required: true},
+  name: { type: String, required: true, maxlength: 50 },
   email: { type: String, required: true, unique: true },
-  number: { type: Number, required: true, maxlength: 10 },
-  password: { type: String, required: true, minlength: 10 },
+  phone: { type: String, required: true, maxlength: 10 },
+  password: { type: String, required: true, minlength: 8 },
   role: { type: String, enum: ["user", "admin", "seller"], default: "user" },
   profilePic: {
     type: String,
