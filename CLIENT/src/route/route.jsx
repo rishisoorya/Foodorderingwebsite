@@ -16,7 +16,7 @@ import LandPage from "../pages/LandPage";
 import ProtectRoutes from "./ProtectRoutes";
 // import DiscountListing from "..DiscountListing/components/DiscountListing"
 
-const routes = createBrowserRouter([
+const route = createBrowserRouter([
   {
     path: "/",
     element: <Userlayout />,
@@ -79,4 +79,4 @@ const routes = createBrowserRouter([
   },
 ]);
 
-export default routes;
+export default route;
