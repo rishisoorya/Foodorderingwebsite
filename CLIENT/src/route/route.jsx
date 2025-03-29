@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Userlayout from "../layout/Userlayout";
 import HomePage from "../components/shared/HomePage";
-import LogIn from "../components/shared/login";
+import Login from "../components/shared/login";
 import RestaurantListingPage from "../pages/RestaurantListingPage";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
@@ -10,8 +10,8 @@ import CartPage from "../pages/CartPage";
 import SignupPage from "../components/shared/SignupPage";
 import UserProfilePage from "../pages/UserProfilePage";
 // import ErrorPage from "../pages/errorpage";
-import FoodCardPage from "../pages/FoodCardPage";
-import SignOutPage from "../components/shared/SignOutPage";
+// import FoodCardPage from "../pages/FoodCardPage";
+// import SignOutPage from "../components/shared/SignOutPage";
 import LandPage from "../pages/LandPage";
 import ProtectRoutes from "./ProtectRoutes";
 // import DiscountListing from "..DiscountListing/components/DiscountListing"
@@ -27,7 +27,7 @@ const route = createBrowserRouter([
       },
       {
         path: "login",
-        element: <LogIn />,
+        element: <Login />,
       },
 
       {

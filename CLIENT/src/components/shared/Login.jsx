@@ -4,7 +4,7 @@ import axiosInstance from "../../axios/axiosInstance";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
-function LogIn() {
+function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -186,4 +186,4 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+export default Login;
