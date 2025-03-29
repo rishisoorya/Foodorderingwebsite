@@ -68,28 +68,13 @@ const Routes = createBrowserRouter([
             element: <UserProfilePage />,
           },
           // {
-          //   path:"errorpage",
-          //   element:<ErrorPage/>
-
+          //   path: "foodcardpage",
+          //   element: <FoodCardPage />,
           // },
-          {
-            path: "foodcardpage",
-            element: <FoodCardPage />,
-          },
         ],
       },
 
-      // {
-      //   path:"sign out",
-      //   element:<SignOutPage/>
-
-      // },
-
-      // {
-      //   path:"discount",
-      //   element:<DiscountListing/>
-
-      // },
+      
     ],
   },
 ]);
