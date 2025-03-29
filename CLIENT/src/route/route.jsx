@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Userlayout from "../layout/Userlayout";
 import HomePage from "../components/shared/HomePage";
-import Login from "../components/shared/login";
+import Login from "../components/shared/Login";
 import RestaurantListingPage from "../pages/RestaurantListingPage";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
@@ -73,8 +73,6 @@ const route = createBrowserRouter([
           // },
         ],
       },
-
-      
     ],
   },
 ]);
