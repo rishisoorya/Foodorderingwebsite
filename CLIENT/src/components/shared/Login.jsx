@@ -30,7 +30,7 @@ function Login() {
       const response = await axiosInstance.post("/user/login", formData);
       toast.success(response.data?.message||"Login Success")
       setTimeout(() => {
-        navigate("/")
+        navigate("/home")
       }, 1000);
 
       
