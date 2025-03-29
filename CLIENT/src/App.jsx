@@ -1,6 +1,6 @@
 import React from "react"
 import { RouterProvider } from "react-router-dom"
-import Routes from "./route/Routes"
+import routes from "./route/routes"
 import  { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   return (
     <>
 
-    <RouterProvider router={Routes} />
+    <RouterProvider router={routes} />
     <Toaster/>
     </>
   )
