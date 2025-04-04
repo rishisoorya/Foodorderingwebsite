@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import UseFetch from "../hooks/useFetch";
+import UseFetch from "../hooks/UseFetch.jsx";
 
 
 const LandPage = () => {
-  const [data, isLoading, error, refetch] = UseFetch("/restaurant/all");
+  const [data, isLoading, error, refetch] = UseFetch ("/restaurant/all");
   const navigate = useNavigate();
   const restaurants = data?.restaurant || [];
 
