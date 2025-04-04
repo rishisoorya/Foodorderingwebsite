@@ -86,7 +86,7 @@ const OrdersPage = () => {
                     <span className={`badge ${
                       order.status === 'pending' ? 'badge-warning' :
                       order.status === 'completed' ? 'badge-success' :
-                      order.status === 'Confirmed' ? 'badge-success' :
+                      order.status === 'confirmed' ? 'badge-success' :
                       order.status === 'cancelled' ? 'badge-danger' : 'badge-secondary'
                     }`}>
                       {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
