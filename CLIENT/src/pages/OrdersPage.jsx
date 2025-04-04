@@ -40,7 +40,7 @@ const OrdersPage = () => {
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Actions</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -97,14 +97,7 @@ const OrdersPage = () => {
                       {new Date(order.createdAt).toLocaleTimeString()}
                     </div>
                   </td>
-                  <td>
-                    <button className="btn btn-sm btn-outline-primary mr-2">
-                      View
-                    </button>
-                    <button className="btn btn-sm btn-outline-secondary">
-                      Update
-                    </button>
-                  </td>
+                 
                 </tr>
               ))}
             </tbody>
