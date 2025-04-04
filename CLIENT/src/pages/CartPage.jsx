@@ -69,7 +69,7 @@ const CartPage = () => {
   useEffect(() => {
     if (showAlert) {
       setTimeout(() => {
-        navigate("/user/payment", { replace: true });
+        navigate("/pages/paymentPage", { replace: true });
       }, 2000);
     }
   }, [showAlert, navigate]);

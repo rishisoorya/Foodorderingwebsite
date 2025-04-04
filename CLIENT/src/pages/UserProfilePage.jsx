@@ -1,5 +1,7 @@
 import React from 'react';
 import useFetch from '../hooks/useFetch';
+import { Link } from "react-router-dom";
+
 
 export default function UserProfilePage() {
   const [userData, isUserLoading, userError] = useFetch("/user/profile");
@@ -84,6 +86,9 @@ export default function UserProfilePage() {
               <p className="font-medium">
                 {address.state} - {address.pincode}
               </p>
+              <Link to ={"/pages/UpdateAddressPage"}><button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>Update Address</button></Link>
+              
+
             </div>
           </div>
         </div>
