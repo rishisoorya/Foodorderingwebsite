@@ -16,8 +16,9 @@ import LandPage from "../pages/LandPage.jsx";
 import ProtectRoutes from "./ProtectRoutes.jsx";
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx"
 import MenuPage from "../pages/Menu.jsx";
-import PaymentPage from "../pages/PaymentPage.jsx"
+import PaymentPage from "../pages/PaymentPage.jsx";
 import UpdateAddressPage from "../pages/UpdateAddressPage.jsx";
+import OrdersPage from "../pages/OrdersPage.jsx";
 // import DiscountListing from "..DiscountListing/components/DiscountListing"
 
 
@@ -86,6 +87,10 @@ const route = createBrowserRouter([
           {
             path: "/pages/UpdateAddressPage",
             element: <UpdateAddressPage/>,
+          },
+          {
+            path: "/pages/OrdersPage",
+            element: <OrdersPage/>,
           },
         
          

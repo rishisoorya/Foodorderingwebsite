@@ -110,7 +110,7 @@ function Userheader() {
                     Settings
                   </Link>
                   <Link
-                    to="/orders"
+                    to="/pages/OrdersPage"
                     onClick={() => {
                       setIsProfileOpen(false);
                       handleLinkClick("orders");
