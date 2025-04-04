@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UseFetch from '../../hooks/useFetch';
+import UseFetch from '../../hooks/UseFetch.jsx';
 
 
 const PromoCode = ({ selectedCoupon, setSelectedCoupon }) => {

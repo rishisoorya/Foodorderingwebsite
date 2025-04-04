@@ -1,21 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
-import Userlayout from "../layout/Userlayout";
-import HomePage from "../components/shared/HomePage";
-import Login from "../components/shared/Login";
+import Userlayout from "../layout/Userlayout.jsx";
+import HomePage from "../components/shared/HomePage.jsx";
+import Login from "../components/shared/Login.jsx";
 import RestaurantListingPage from "../pages/RestaurantListingPage";
-import AboutPage from "../pages/AboutPage";
-import ContactPage from "../pages/ContactPage";
-import RestaurantPage from "../pages/RestaurantPage";
-import CartPage from "../pages/CartPage";
-import SignupPage from "../components/shared/SignupPage";
-import UserProfilePage from "../pages/UserProfilePage";
-import ErrorPage from "../pages/ErrorPage";
+import AboutPage from "../pages/AboutPage.jsx";
+import ContactPage from "../pages/ContactPage.jsx";
+import RestaurantPage from "../pages/RestaurantPage.jsx";
+import CartPage from "../pages/CartPage.jsx";
+import SignupPage from "../components/shared/SignupPage.jsx";
+import UserProfilePage from "../pages/UserProfilePage.jsx";
+import ErrorPage from "../pages/ErrorPage.jsx";
 // import FoodCardPage from "../pages/FoodCardPage";
 // import SignOutPage from "../components/shared/SignOutPage";
-import LandPage from "../pages/LandPage";
-import ProtectRoutes from "./ProtectRoutes";
-import AdminDashboard from "../pages/admin/AdminDashboard"
-import MenuPage from "../pages/Menu";
+import LandPage from "../pages/LandPage.jsx";
+import ProtectRoutes from "./ProtectRoutes.jsx";
+import AdminDashboard from "../pages/admin/AdminDashboard.jsx"
+import MenuPage from "../pages/Menu.jsx";
 import PaymentPage from "../pages/PaymentPage.jsx"
 import UpdateAddressPage from "../pages/UpdateAddressPage.jsx";
 // import DiscountListing from "..DiscountListing/components/DiscountListing"

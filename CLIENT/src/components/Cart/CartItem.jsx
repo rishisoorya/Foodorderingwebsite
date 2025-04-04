@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import axiosInstance from '../../axios/axiosInstance.js';
-import UseFetch from '../../hooks/useFetch.jsx';
+import UseFetch from '../../hooks/UseFetch.jsx';
 
 
 

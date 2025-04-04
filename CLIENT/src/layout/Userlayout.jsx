@@ -1,11 +1,11 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Userheader from "../components/shared/Userheader";
-import Header from "../components/shared/Header";
-import Footer from "../components/shared/Footer";
+import Userheader from "../components/shared/Userheader.jsx";
+import Header from "../components/shared/Header.jsx";
+import Footer from "../components/shared/Footer.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUserdata, saveUserData } from "../redux/features/userSlice.js";
-import axiosInstance from "../axios/axiosInstance";
+import axiosInstance from "../axios/axiosInstance.js";
 
 const UserLayout = () => {
   const { isUserAuth, userData } = useSelector((state) => state.user);

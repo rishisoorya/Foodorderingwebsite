@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from "react-router-dom";
-import UseFetch from '../hooks/UseFetch';
+import UseFetch from '../hooks/UseFetch.jsx';
 
 
 export default function UserProfilePage() {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MenuCard from '../components/MenuCard.jsx';
-import UseFetch from './hooks/UseFetch.jsx'
+import UseFetch from '../hooks/UseFetch.jsx';
 
 
 const RestaurantPage = () => {
