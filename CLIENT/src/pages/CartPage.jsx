@@ -18,14 +18,13 @@ const CartPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-
   const navigate = useNavigate();
 
   const handleCheckout = async () => {
     setError("");
 
     if (!cartId || !selectedAddressId || !restaurantId) {
-      console.log("Missing cartId, restaurantId, or selectedAddressId");
+     
       setError("Please select an address and add items to the cart.");
       return;
     }
