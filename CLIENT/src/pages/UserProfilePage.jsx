@@ -1,12 +1,13 @@
 import React from 'react';
-import useFetch from '../hooks/useFetch';
+
 import { Link } from "react-router-dom";
+import UseFetch from "../hooks/UseFetch.jsx";
 
 
 export default function UserProfilePage() {
-  const [userData, isUserLoading, userError] = useFetch("/user/profile");
-  const [addressData, isAddressLoading, addressError] = useFetch("/address/get/getAllAddress");
-  const [ordersData, isOrdersLoading, ordersError] = useFetch("/order/get/all");
+  const [userData, isUserLoading, userError] = UseFetch("/user/profile");
+  const [addressData, isAddressLoading, addressError] = UseFetch("/address/get/getAllAddress");
+  const [ordersData, isOrdersLoading, ordersError] = UseFetch("/order/get/all");
 
   const profile = userData?.user || {};
   const address = addressData?.address || null;

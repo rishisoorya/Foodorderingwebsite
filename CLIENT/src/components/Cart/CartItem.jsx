@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import useFetch from '../../hooks/UseFetch.jsx';
 import axiosInstance from '../../axios/axiosInstance.js';
+import UseFetch from '../../hooks/useFetch.jsx';
+
+
 
 const CartItem = ({ setCartId, setRestaurantId, setItems }) => {
-  const [data, isLoading, error, refetch] = useFetch("/cart/all");
+  const [data, isLoading, error, refetch] =UseFetch ("/cart/all");
   const cart = data?.data || {};
   
   // Memoize items to prevent unnecessary effect triggers

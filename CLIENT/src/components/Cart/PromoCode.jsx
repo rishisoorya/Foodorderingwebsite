@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import useFetch from '../../hooks/UseFetch.jsx'; // Ensure this hook exists
+import UseFetch from '../../hooks/useFetch';
+
 
 const PromoCode = ({ selectedCoupon, setSelectedCoupon }) => {
   const [discount, setDiscount] = useState(0);
   const [errorMsg, setErrorMsg] = useState('');
-  const [data, isLoading, error] = useFetch("/coupon/get");
+  const [data, isLoading, error] = UseFetch("/coupon/get");
   const coupons = data?.coupons || [];
 
   const handleCouponClick = (code) => {

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import useFetch from '../hooks/useFetch';
-import MenuCard from '../components/MenuCard';
+import MenuCard from '../components/MenuCard.jsx';
+import UseFetch from './hooks/UseFetch.jsx'
+
 
 const RestaurantPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   
   // Fetch restaurant data (assuming your endpoint returns a single restaurant)
-  const [restaurantData, isLoading, error] = useFetch('/restaurant');
+  const [restaurantData, isLoading, error] = UseFetch('/restaurant');
   const menuItems = restaurantData?.menu || [];
   
   const categories = ['all', ...new Set(menuItems.map(item => item?.category))].filter(Boolean);
