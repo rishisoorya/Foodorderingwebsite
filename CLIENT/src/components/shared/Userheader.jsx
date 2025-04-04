@@ -99,16 +99,7 @@ function Userheader() {
                   >
                     Your Profile
                   </Link>
-                  <Link
-                    to="/settings"
-                    onClick={() => {
-                      setIsProfileOpen(false);
-                      handleLinkClick("settings");
-                    }}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Settings
-                  </Link>
+                  
                   <Link
                     to="/pages/OrdersPage"
                     onClick={() => {
