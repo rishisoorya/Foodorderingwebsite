@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance.js";
-
 import toast from "react-hot-toast";
 
 const SignupPage = () => {
@@ -47,7 +46,6 @@ const SignupPage = () => {
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
-    console.log(formData);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -60,11 +58,19 @@ const SignupPage = () => {
     if (validate()) {
       setIsSubmitting(true);
 
+      // Create a copy of formData and prepend +91 to phone if it's not already there
+      const submitData = {
+        ...formData,
+        phone: formData.phone.startsWith("+91")
+          ? formData.phone
+          : `+91${formData.phone}`,
+      };
+
       try {
-        const response = await axiosInstance.post("/user/signup", formData);
-        toast.success(response.data?.message || "Login success");
+        const response = await axiosInstance.post("/user/signup", submitData);
+        toast.success(response.data?.message || "Registration successful");
         setTimeout(() => {
-          navigate("/Login")
+          navigate("/home");
         }, 1000);
       } catch (error) {
         if (error.response) {
@@ -226,27 +232,23 @@ const SignupPage = () => {
                   Phone Number
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></div>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                      +91
+                    </span>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={`block w-full pl-4 pr-4 py-3 rounded-r-xl border ${
+                        errors.phone ? "border-red-300" : "border-gray-300"
+                      } focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200`}
+                      placeholder="9876543210"
+                    />
                   </div>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 pr-4 py-3 rounded-xl border ${
-                      errors.phone ? "border-red-300" : "border-gray-300"
-                    } focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200`}
-                    placeholder="mobile"
-                  />
                 </div>
                 {errors.phone && (
                   <p className="mt-1 text-sm text-red-600">{errors.phone}</p>

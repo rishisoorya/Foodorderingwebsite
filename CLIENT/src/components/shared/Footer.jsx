@@ -61,11 +61,13 @@ function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-600 hover:text-pink-600 transition-colors duration-300 flex items-center"
                 >
                   <svg
@@ -86,7 +88,7 @@ function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/restaurants"
                   className="text-gray-600 hover:text-pink-600 transition-colors duration-300 flex items-center"
                 >
                   <svg
@@ -102,12 +104,12 @@ function Footer() {
                       d="M9 5l7 7-7 7"
                     ></path>
                   </svg>
-                  Menu
+                  Restaurant
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/about"
                   className="text-gray-600 hover:text-pink-600 transition-colors duration-300 flex items-center"
                 >
                   <svg
@@ -128,7 +130,7 @@ function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="contact"
                   className="text-gray-600 hover:text-pink-600 transition-colors duration-300 flex items-center"
                 >
                   <svg
@@ -152,7 +154,9 @@ function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Contact Us
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <svg

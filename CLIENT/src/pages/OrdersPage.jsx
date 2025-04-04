@@ -1,31 +1,38 @@
-import React from 'react';
-import UseFetch from '../hooks/UseFetch.jsx'; 
+import React from "react";
+import UseFetch from "../hooks/UseFetch.jsx";
 
 const OrdersPage = () => {
   const [data, isLoading, error] = UseFetch("/order/get/all");
   const orders = data?.orders || [];
 
-  if (isLoading) return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      width: '100vw'
-    }}>
-      <div className="loader"></div>
-    </div>
-  );
+  if (isLoading)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100vw",
+        }}
+      >
+        <div className="loader"></div>
+      </div>
+    );
 
   if (error) {
     console.error("Fetch Error:", error);
-    return <p className="text-danger text-center">No Order Found or {error.message}</p>;
+    return (
+      <p className="text-danger text-center">
+        No Order Found or {error.message}
+      </p>
+    );
   }
 
   return (
     <div className="container py-5">
       <h1 className="mb-4">Order Management</h1>
-      
+
       {orders.length === 0 ? (
         <div className="alert alert-info">No orders found.</div>
       ) : (
@@ -40,11 +47,10 @@ const OrdersPage = () => {
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Date</th>
-                
               </tr>
             </thead>
             <tbody>
-              {orders.map(order => (
+              {orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id.substring(0, 8)}...</td>
                   <td>
@@ -57,17 +63,26 @@ const OrdersPage = () => {
                   <td>{order.restaurant.name}</td>
                   <td>
                     <div className="d-flex flex-column">
-                      {order.cartId.items.map(item => (
-                        <div key={item._id} className="mb-2 d-flex align-items-center">
-                          <img 
-                            src={item.foodImage} 
-                            alt={item.foodName} 
-                            className="rounded mr-2" 
-                            style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                      {order.cartId.items.map((item) => (
+                        <div
+                          key={item._id}
+                          className="mb-2 d-flex align-items-center"
+                        >
+                          <img
+                            src={item.foodImage}
+                            alt={item.foodName}
+                            className="rounded mr-2"
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              objectFit: "cover",
+                            }}
                           />
                           <div>
                             {item.foodName} × {item.quantity}
-                            <div className="text-muted small">₹{item.totalItemPrice}</div>
+                            <div className="text-muted small">
+                              ₹{item.totalItemPrice}
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -77,19 +92,31 @@ const OrdersPage = () => {
                     <div>
                       <div>Total: ₹{order.totalAmount}</div>
                       {order.coupon && (
-                        <div className="text-success small">Discount applied</div>
+                        <div className="text-success small">
+                          Discount applied
+                        </div>
                       )}
-                      <div className="font-weight-bold">Final: ₹{order.finalPrice}</div>
+                      <div className="font-weight-bold">
+                        Final: ₹{order.finalPrice}
+                      </div>
                     </div>
                   </td>
                   <td>
-                    <span className={`badge ${
-                      order.status === 'pending' ? 'badge-warning' :
-                      order.status === 'completed' ? 'badge-success' :
-                      order.status === 'confirmed' ? 'badge-success' :
-                      order.status === 'cancelled' ? 'badge-danger' : 'badge-secondary'
-                    }`}>
-                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    <span
+                      className={`px-2 py-1 rounded-full text-white text-sm font-medium ${
+                        order.status === "pending"
+                          ? "bg-yellow-500"
+                          : order.status === "completed"
+                          ? "bg-green-600"
+                          : order.status === "confirmed"
+                          ? "bg-green-600"
+                          : order.status === "cancelled"
+                          ? "bg-red-600"
+                          : "bg-gray-500"
+                      }`}
+                    >
+                      {order.status.charAt(0).toUpperCase() +
+                        order.status.slice(1)}
                     </span>
                   </td>
                   <td>
@@ -98,7 +125,6 @@ const OrdersPage = () => {
                       {new Date(order.createdAt).toLocaleTimeString()}
                     </div>
                   </td>
-                 
                 </tr>
               ))}
             </tbody>
