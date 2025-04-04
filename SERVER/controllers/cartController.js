@@ -1,4 +1,4 @@
-import{Cart} from "../models/cartModel.js";
+import { Cart } from "../models/cartModel.js";
 import { Restaurant } from "../models/restaurantModel.js";
 
 export async function addToCart(req, res) {
@@ -39,6 +39,7 @@ export async function addToCart(req, res) {
       cart.items.push({
         foodId,
         foodName: menuItem.name,
+        foodImage: menuItem.image,
         quantity,
         totalItemPrice: itemPrice,
       });

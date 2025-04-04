@@ -2,31 +2,29 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const addressSchema = new Schema(
-  {
-    recipientName: { type: String, required: true, maxlength: 50 }, 
-    buildingName: { type: String, required: true, maxlength: 50 }, 
-    streetAddress: { type: String, required: true, maxlength: 50 }, 
-    nearbyLandmark: { type: String, required: true, maxlength: 50 }, 
-    cityName: { type: String, required: true, maxlength: 50 }, 
-    stateName: { type: String, required: true, maxlength: 50 }, 
-    postalCode: {
-      type: String,
-      required: true,
-      match: [/^\d{6}$/, "Invalid postal code format. It must be exactly 6 digits."], 
-    },
-    contactNumber: {
-      type: String,
-      required: true,
-      match: [/^\d{10}$/, "Invalid contact number. It must be exactly 10 digits."], 
-    },
-    userReference: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-     
-    },
+const addressSchema = new Schema({
+  name: { type: String, required: true, maxlength: 50 },
+  houseName: { type: String, required: true,  }, 
+  streetName: { type: String, required: true, },
+  landmark: { type: String, required: true,  },  
+  city: { type: String, required: true, maxlength: 50 },
+  state: { type: String, required: true, maxlength: 50 },  
+  pincode: {
+    type: String,
+    required: true,
+    match: [/^\d{6}$/, "Invalid Pincode format. It must be exactly 6 digits."],
   },
-  { timestamps: true } 
-);
+  phone: {
+    type: String,
+    required: true,
+    match: [/^\d{10}$/, "Invalid Phone format. It must be exactly 10 digits."],  
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,  
+  },
+  createdAt: { type: Date, default: Date.now },
+});
 
 export const Address = mongoose.model("Address", addressSchema);

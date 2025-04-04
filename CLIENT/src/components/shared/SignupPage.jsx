@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
-import Cookies from "js-cookie";
+
 import toast from "react-hot-toast";
 
 const SignupPage = () => {

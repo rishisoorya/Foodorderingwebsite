@@ -23,7 +23,9 @@ const cartSchema = new Schema(
         foodName:{
           type: String
         },
-        
+        foodImage:{
+          type: String
+        },
         quantity: {
           type: Number,
           required: true,

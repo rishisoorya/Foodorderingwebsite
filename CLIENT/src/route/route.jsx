@@ -9,17 +9,23 @@ import RestaurantPage from "../pages/RestaurantPage";
 import CartPage from "../pages/CartPage";
 import SignupPage from "../components/shared/SignupPage";
 import UserProfilePage from "../pages/UserProfilePage";
-// import ErrorPage from "../pages/errorpage";
+import ErrorPage from "../pages/ErrorPage";
 // import FoodCardPage from "../pages/FoodCardPage";
 // import SignOutPage from "../components/shared/SignOutPage";
 import LandPage from "../pages/LandPage";
 import ProtectRoutes from "./ProtectRoutes";
+import AdminDashboard from "../pages/admin/AdminDashboard"
+import MenuPage from "../pages/Menu";
 // import DiscountListing from "..DiscountListing/components/DiscountListing"
 
+
 const route = createBrowserRouter([
-  {
+
+ {
     path: "/",
     element: <Userlayout />,
+    
+    
     children: [
       {
         path: "",
@@ -67,10 +73,16 @@ const route = createBrowserRouter([
             path: "profile",
             element: <UserProfilePage />,
           },
+          {
+            path: "/user/restaurant/:id",
+            element: <MenuPage/>,
+          },
+         
           // {
           //   path: "foodcardpage",
           //   element: <FoodCardPage />,
           // },
+          
         ],
       },
     ],

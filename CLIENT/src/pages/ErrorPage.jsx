@@ -1,76 +1,68 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { FiFrown, FiHome, FiSearch } from 'react-icons/fi';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FiFrown, FiHome, FiMail } from 'react-icons/fi';
 
-// const ErrorPage = () => {
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-100 flex flex-col items-center justify-center p-6">
-//       {/* Animated Container */}
-//       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl">
-//         {/* Decorative Header */}
-//         <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-8 text-center">
-//           <div className="flex justify-center mb-4">
-//             <FiFrown className="h-16 w-16 text-white opacity-90" />
-//           </div>
-//           <h1 className="text-4xl font-bold text-white">404</h1>
-//           <p className="mt-2 text-pink-100 text-lg">Oops! Page not found</p>
-//         </div>
+const ErrorPage = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex flex-col items-center justify-center p-6">
+      {/* Main Container */}
+      <div className="max-w-md w-full bg-gray-850 rounded-xl shadow-2xl overflow-hidden border border-gray-700 transition-all duration-500 hover:shadow-3xl">
+        {/* Header Section */}
+        <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-8 text-center border-b border-gray-700">
+          <div className="flex justify-center mb-4">
+            <FiFrown className="h-16 w-16 text-gray-300 opacity-90" />
+          </div>
+          <h1 className="text-4xl font-bold text-white">404</h1>
+          <p className="mt-2 text-gray-400 text-lg">Page Not Found</p>
+        </div>
 
-//         {/* Content */}
-//         <div className="p-8 text-center">
-//           <h2 className="text-2xl font-bold text-gray-800 mb-2">Lost your appetite?</h2>
-//           <p className="text-gray-600 mb-6">
-//             The page you're looking for doesn't exist or has been moved. 
-//             Let's get you back to discovering delicious food!
-//           </p>
+        {/* Content Section */}
+        <div className="p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-100 mb-2">Looking for something?</h2>
+          <p className="text-gray-400 mb-8">
+            The requested page doesn't exist or may have been moved.
+          </p>
 
-//           {/* Food Illustration */}
-//           <div className="flex justify-center mb-8">
-//             <div className="relative h-32 w-32">
-//               <div className="absolute top-0 left-0 h-16 w-16 bg-yellow-400 rounded-full opacity-30 animate-pulse" style={{ animationDelay: '0.1s' }}></div>
-//               <div className="absolute top-4 right-4 h-12 w-12 bg-red-400 rounded-full opacity-30 animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-//               <div className="absolute bottom-4 left-4 h-14 w-14 bg-green-400 rounded-full opacity-30 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-//               <div className="absolute bottom-0 right-0 h-10 w-10 bg-blue-400 rounded-full opacity-30 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-//             </div>
-//           </div>
+          {/* Abstract Illustration */}
+          <div className="flex justify-center mb-8">
+            <div className="relative h-32 w-32">
+              <div className="absolute top-0 left-0 h-16 w-16 bg-blue-500 rounded-full opacity-10 animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+              <div className="absolute top-4 right-4 h-12 w-12 bg-indigo-500 rounded-full opacity-10 animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+              <div className="absolute bottom-4 left-4 h-14 w-14 bg-purple-500 rounded-full opacity-10 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="absolute bottom-0 right-0 h-10 w-10 bg-gray-600 rounded-full opacity-10 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+          </div>
 
-//           {/* Action Buttons */}
-//           <div className="flex flex-col sm:flex-row justify-center gap-4">
-//             <Link
-//               to="/"
-//               className="flex items-center justify-center px-6 py-3 border border-transparent rounded-xl text-base font-medium text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300"
-//             >
-//               <FiHome className="mr-2" />
-//               Go Home
-//             </Link>
-//             <Link
-//               to="/search"
-//               className="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-xl text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition-all duration-300"
-//             >
-//               <FiSearch className="mr-2" />
-//               Search Food
-//             </Link>
-//           </div>
-//         </div>
+          {/* Single Action Button */}
+          <div className="flex justify-center">
+            <Link
+              to="/"
+              className="flex items-center justify-center px-8 py-3 border border-transparent rounded-lg text-base font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md"
+            >
+              <FiHome className="mr-2" />
+              Return Home
+            </Link>
+          </div>
+        </div>
 
-//         {/* Footer */}
-//         <div className="px-8 py-4 bg-gray-50 text-center">
-//           <p className="text-sm text-gray-500">
-//             Need help?{' '}
-//             <a href="#" className="font-medium text-pink-600 hover:text-pink-500">
-//               Contact support
-//             </a>
-//           </p>
-//         </div>
-//       </div>
+        {/* Footer Section */}
+        <div className="px-8 py-4 bg-gray-800 text-center border-t border-gray-700">
+          <p className="text-sm text-gray-400">
+            Need assistance?{' '}
+            <a href="mailto:support@example.com" className="font-medium text-blue-400 hover:text-blue-300 flex items-center justify-center">
+              <FiMail className="mr-1" /> Contact Support
+            </a>
+          </p>
+        </div>
+      </div>
 
-//       {/* Floating Food Icons */}
-//       <div className="hidden md:block fixed -bottom-20 -left-20 h-40 w-40 bg-yellow-100 rounded-full opacity-20"></div>
-//       <div className="hidden md:block fixed -top-20 -right-20 h-64 w-64 bg-purple-100 rounded-full opacity-20"></div>
-//       <div className="hidden md:block fixed top-1/4 -right-10 h-32 w-32 bg-pink-100 rounded-full opacity-20"></div>
-//       <div className="hidden md:block fixed bottom-1/4 -left-10 h-24 w-24 bg-green-100 rounded-full opacity-20"></div>
-//     </div>
-//   );
-// };
+      {/* Background Elements */}
+      <div className="hidden md:block fixed -bottom-20 -left-20 h-40 w-40 bg-gray-800 rounded-full opacity-10"></div>
+      <div className="hidden md:block fixed -top-20 -right-20 h-64 w-64 bg-gray-800 rounded-full opacity-10"></div>
+      <div className="hidden md:block fixed top-1/4 -right-10 h-32 w-32 bg-gray-800 rounded-full opacity-10"></div>
+      <div className="hidden md:block fixed bottom-1/4 -left-10 h-24 w-24 bg-gray-800 rounded-full opacity-10"></div>
+    </div>
+  );
+};
 
-// export default ErrorPage;
+export default ErrorPage;

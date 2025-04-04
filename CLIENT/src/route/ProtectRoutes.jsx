@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const ProtectRoutes = () => {
   const { isUserAuth } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  if (!isUserAuth) {
-    navigate("/login");
-  }
-  return isUserAuth && <Outlet />;
+
+  // useEffect(() => {
+  //   if (!isUserAuth) {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [isUserAuth, navigate]);
+
+  return isUserAuth ? <Outlet /> : null;
 };
 
 export default ProtectRoutes;

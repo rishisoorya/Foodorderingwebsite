@@ -1,18 +1,19 @@
-import React from "react"
-import { RouterProvider } from "react-router-dom"
-import route from "./route/route.jsx"
-import  { Toaster } from 'react-hot-toast';
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import route from "./route/route.jsx";
+import { Toaster } from "react-hot-toast";
+
 
 function App() {
-
-
   return (
     <>
-
-    <RouterProvider router={route} />
-    <Toaster/>
+      {/* <route path="/" element={<RestaurantListingPage />} />
+      <route path="/user/restaurant/:id" element={<MenuPage />} /> */}
+      <RouterProvider router={route} />
+      <Toaster />
+      
     </>
-  )
+  );
 }
 
-export default App
+export default App;

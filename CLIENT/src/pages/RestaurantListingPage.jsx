@@ -1,74 +1,65 @@
 import React, { useState } from 'react';
-import RestaurantCard from '../components/RestaurantCard'; // Import the card component we created
+import { Link } from 'react-router-dom';
 
 const RestaurantListingPage = () => {
-  // Sample restaurant data
-  const [restaurants, setRestaurants] = useState([
+  // Restaurant data from the provided JSON
+  const [restaurants] = useState([
     {
-      id: 1,
-      name: "Gourmet Paradise",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      rating: 4.5,
-      cuisine: ["Italian", "Mediterranean"],
-      deliveryTime: 25,
-      priceRange: "$$$",
-      isPromoted: true,
-      isOpen: true
-    },
-    {
-      id: 2,
-      name: "Burger King",
-      image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      _id: "67ede6a18ffd20ec3cd843b8",
+      name: "Pepper House",
+      email: "PepperHouse@gmail.com",
+      phone: "+917894561232",
+      image: "http://res.cloudinary.com/dutf0dgga/image/upload/v1743704400/p0xekbqzjtmuvpdr33nz.jpg",
+      openStatus: true,
+      password: "$2b$10$PCJCC9VxcFKFldaVnSIjk.9FQPexuInThAsQjpVLeP9d0GC4x/E16",
+      isVerified: true,
+      menu: [],
+      createdAt: "2025-04-03T01:38:41.112Z",
+      updatedAt: "2025-04-03T01:38:41.112Z",
+      __v: 0,
+      // Adding some additional fields for filtering
       rating: 4.2,
-      cuisine: ["American", "Fast Food"],
-      deliveryTime: 20,
-      priceRange: "$$",
-      isPromoted: false,
-      isOpen: true
-    },
-    {
-      id: 3,
-      name: "Sushi World",
-      image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      rating: 4.7,
-      cuisine: ["Japanese", "Sushi"],
+      cuisine: ["Chinese", "Asian"],
       deliveryTime: 30,
-      priceRange: "$$$$",
-      isPromoted: true,
-      isOpen: true
+      priceRange: "$$"
     },
     {
-      id: 4,
-      name: "Taco Fiesta",
-      image: "https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      _id: "67ede6df8ffd20ec3cd843bc",
+      name: "Malabar Cafe",
+      email: "MalabarCafe@gmail.com",
+      phone: "+917894561231",
+      image: "http://res.cloudinary.com/dutf0dgga/image/upload/v1743704540/jeyx67hxppaktgygbboy.jpg",
+      openStatus: true,
+      password: "$2b$10$mJTEr9Ako.TP1UWWjxtueuGs3kZ.UN.VVD57qYlAy/c.FYDgr9.V6",
+      isVerified: true,
+      menu: [],
+      createdAt: "2025-04-03T01:39:43.213Z",
+      updatedAt: "2025-04-03T01:39:43.213Z",
+      __v: 0,
+      // Adding some additional fields for filtering
       rating: 3.9,
-      cuisine: ["Mexican", "Latin"],
-      deliveryTime: 35,
-      priceRange: "$$",
-      isPromoted: false,
-      isOpen: false
-    },
-    {
-      id: 5,
-      name: "Curry House",
-      image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      rating: 4.3,
-      cuisine: ["Indian", "Asian"],
-      deliveryTime: 40,
-      priceRange: "$$",
-      isPromoted: false,
-      isOpen: true
-    },
-    {
-      id: 6,
-      name: "Pizza Heaven",
-      image: "https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      rating: 4.1,
-      cuisine: ["Italian", "Pizza"],
+      cuisine: ["Chinese", "Fast Food"],
       deliveryTime: 25,
-      priceRange: "$$",
-      isPromoted: true,
-      isOpen: true
+      priceRange: "$"
+    },
+    {
+      _id: "67ede7018ffd20ec3cd843bf",
+      name: "Latest Recipe",
+      email: "Latest Recipe@gmail.com",
+      phone: "+917894561236",
+      image: "http://res.cloudinary.com/dutf0dgga/image/upload/v1743706785/eah1aqftt2xwiyd50fh2.jpg",
+      openStatus: true,
+      password: "$2b$10$1ksOfgCoztM7EgK.o7mVLeoIBNG.DG.JkO0ZUKqoxLs7zmVdmJEYu",
+      isVerified: true,
+      menu: [],
+      createdAt: "2025-04-03T01:40:17.455Z",
+      updatedAt: "2025-04-03T01:40:17.455Z",
+      __v: 0,
+      // Adding some additional fields for filtering
+      rating: 4.5,
+      cuisine: ["Chinese", "Sushi"],
+      deliveryTime: 35,
+      priceRange: "$$$"
     }
   ]);
 
@@ -81,13 +72,13 @@ const RestaurantListingPage = () => {
   // Filter restaurants based on criteria
   const filteredRestaurants = restaurants.filter(restaurant => {
     const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         restaurant.cuisine.some(c => c.toLowerCase().includes(searchTerm.toLowerCase()));
+                         (restaurant.cuisine && restaurant.cuisine.some(c => c.toLowerCase().includes(searchTerm.toLowerCase())));
     const matchesRating = restaurant.rating >= minRating;
     const matchesPrice = priceFilter === 'all' || 
-                        (priceFilter === 'low' && restaurant.priceRange.length <= 2) ||
-                        (priceFilter === 'medium' && restaurant.priceRange.length === 3) ||
-                        (priceFilter === 'high' && restaurant.priceRange.length >= 4);
-    const matchesOpenStatus = !openNow || restaurant.isOpen;
+                        (priceFilter === 'low' && restaurant.priceRange.length <= 1) ||
+                        (priceFilter === 'medium' && restaurant.priceRange.length === 2) ||
+                        (priceFilter === 'high' && restaurant.priceRange.length >= 3);
+    const matchesOpenStatus = !openNow || restaurant.openStatus;
     
     return matchesSearch && matchesRating && matchesPrice && matchesOpenStatus;
   });
@@ -191,7 +182,24 @@ const RestaurantListingPage = () => {
         {filteredRestaurants.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredRestaurants.map(restaurant => (
-              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+              <div key={restaurant._id} className="border rounded-lg overflow-hidden shadow-sm">
+                <img 
+                  className="w-full h-48 object-cover" 
+                  src={restaurant.image} 
+                  alt={restaurant.name} 
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2">{restaurant.name}</h3>
+                  <div className="flex items-center text-sm text-gray-600 mb-4">
+                    <span>⭐ {restaurant.rating}</span>
+                    <span className="mx-2">•</span>
+                    <span>{restaurant.deliveryTime} min</span>
+                    <span className="mx-2">•</span>
+                    <span>{restaurant.priceRange}</span>
+                  </div>
+                  <Link to = {`/user/restaurant/${restaurant._id}`} className="inline-block bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700">View Menu</Link>
+                </div>
+              </div>
             ))}
           </div>
         ) : (

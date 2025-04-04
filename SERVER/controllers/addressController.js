@@ -1,100 +1,149 @@
 import { Address } from "../models/addressModel.js";
 import { User } from "../models/userModel.js";
+import { isValidObjectId } from "mongoose";
 
-export async function generateAddress(req, res) {
+
+export async function createAddress(req, res) {
   try {
-    const user = await User.findById(req.user.id);
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User does not exist" });
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const existingAddress = await Address.findOne({ userId });
+    if (existingAddress) {
+      return res.status(400).json({ message: "Address already exists. Please update instead." });
     }
 
     const {
-      recipientName,
-      buildingName,
-      streetAddress,
-      nearbyLandmark,
-      cityName,
-      stateName,
-      postalCode,
-      contactNumber,
+      name,
+      houseName,
+      streetName,
+      landmark,
+      city,
+      state,
+      pincode,
+      phone
     } = req.body;
 
-    if (
-      !recipientName ||
-      !buildingName ||
-      !streetAddress ||
-      !nearbyLandmark ||
-      !cityName ||
-      !stateName ||
-      !postalCode ||
-      !contactNumber
-    ) {
-      return res.status(400).json({ message: "Every field is required" });
+    if (!name || !houseName || !streetName || !landmark || !city || !state || !pincode || !phone) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const newAddress = new Address({
-      recipientName,
-      buildingName,
-      streetAddress,
-      nearbyLandmark,
-      cityName,
-      stateName,
-      postalCode,
-      contactNumber,
-      userReferenceId: req.user.id,
+      name,
+      houseName,
+      streetName,
+      landmark,
+      city,
+      state,
+      pincode,
+      phone,
+      userId,
     });
 
     await newAddress.save();
-
-    res
-      .status(201)
-      .json({ message: "Address successfully created", newAddress });
+    res.status(201).json({ message: "Address Added Successfully", address: newAddress });
   } catch (error) {
-    console.log(error);
+    console.error("Error creating address:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
-export async function removeAddress(req, res) {
+export async function deleteAddress(req, res) {
   try {
     const { addressId } = req.params;
-    const userReferenceId = req.user.id;
-    const user = await User.findById(userReferenceId);
+    const userId = req.user.id;
 
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User does not exist" });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const removedAddress = await Address.findByIdAndDelete(addressId);
-
-    if (!removedAddress) {
-      return res
-        .status(404)
-        .json({ message: "Address not found or already deleted" });
+    const address = await Address.findOne({ _id: addressId, userId });
+    if (!address) {
+      return res.status(404).json({ message: "Address not found or does not belong to the user" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Address cleared successfully" });
+    await Address.findByIdAndDelete(addressId);
+
+    res.status(200).json({ message: "Address Deleted Successfully" });
   } catch (error) {
-    console.log(error);
+    console.error("Error deleting address:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
-export async function getAllAddress(req,res) {
-
+export async function getAddress(req, res) {
   try {
-    const userid = req.user.id
-    const {addressId} = req.params
-    const address = await Address.find({userid})
-    if (address.length === 0){
-      return res.status(400).json({message:"No Address created"});
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized User" });
     }
-    res.status(201).json({message:""})
-    
+
+    const userId = req.user.id;
+    if (!isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+    const address = await Address.findOne({ userId }).select(
+      "name houseName streetName landmark city state pincode phone"
+    );
+    if (!address) {
+      return res.status(404).json({ message: "No address found for this user" });
+    }
+    res.status(200).json({ message: "User Address Fetched Successfully", address });
   } catch (error) {
-    
+    console.error("Error fetching address for user:", req.user?.id, error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
-  
+}
+
+
+export async function updateAddress(req, res) {
+  try {
+    const userId = req.user.id;
+
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+
+
+    let address = await Address.findOne({ userId });
+    if (!address) {
+      return res.status(404).json({ message: "Address Not Found" });
+    }
+
+    const updatedData = req.body;
+    const requiredFields = [
+      "name",
+      "houseName",
+      "streetName",
+      "landmark",
+      "city",
+      "state",
+      "pincode",
+      "phone",
+    ];
+
+    for (const field of requiredFields) {
+      if (!updatedData[field]) {
+        return res.status(400).json({ message: `${field} is required` });
+
+      }
+    }
+
+    address = await Address.findOneAndUpdate(
+      { userId },
+      updatedData,
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({ message: "Address Updated Successfully", address });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 }

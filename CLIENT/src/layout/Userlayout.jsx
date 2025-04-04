@@ -4,8 +4,9 @@ import Userheader from "../components/shared/Userheader";
 import Header from "../components/shared/Header";
 import Footer from "../components/shared/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserdata, saveUserData } from "../redux/features/userSlice";
-import axiosInstance from "../axios/axiosInstance.js";
+import { clearUserdata, saveUserData } from "../redux/features/userSlice.js";
+import axiosInstance from "../axios/axiosInstance";
+
 const UserLayout = () => {
   const { isUserAuth, userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();

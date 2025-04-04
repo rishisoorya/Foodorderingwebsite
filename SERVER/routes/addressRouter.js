@@ -1,9 +1,10 @@
 import express from "express"
-import { generateAddress,removeAddress } from "../controllers/addressController.js";
+import { createAddress,deleteAddress,getAddress } from "../controllers/addressController.js";
 import { userMiddleware } from "../middlewares/userMiddleware.js";
 const router = express.Router();
 
-router.post("/create",userMiddleware,generateAddress)
-router.delete("/delete/:addressId",userMiddleware,removeAddress)
+router.post("/create",userMiddleware,createAddress)
+router.delete("/delete/:addressId",userMiddleware,deleteAddress)
+router.get("/get/getAllAddress",userMiddleware,getAddress)
 
 export const addressRouterLink = router;
