@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-
+import CartItem from "../components/Cart/CartItem.jsx"
 import PromoCode from "../components/Cart/PromoCode.jsx";
 import EmptyCart from "../components/cart/EmptyCart.jsx";
 import ShowAddress from "../components/Cart/ShowAddress.jsx";
-import CartItem from "../components/Cart/CartItem.jsx"; // Add missing import
 import axiosInstance from "../axios/axiosInstance.js"; 
 
 const CartPage = () => {
   const [cartId, setCartId] = useState(null);
   const [restaurantId, setRestaurantId] = useState(null);
   const [items, setItems] = useState([]);
+  const [promoCode, setPromoCode] = useState("");
   const [selectedCoupon, setSelectedCoupon] = useState("");
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,11 +25,8 @@ const CartPage = () => {
     setError("");
 
     if (!cartId || !selectedAddressId || !restaurantId) {
+      console.log("Missing cartId, restaurantId, or selectedAddressId");
       setError("Please select an address and add items to the cart.");
-      toast.error("Please select an address and add items to the cart.", {
-        position: "top-right",
-        autoClose: 2000,
-      });
       return;
     }
 
@@ -43,12 +40,13 @@ const CartPage = () => {
 
     try {
       const response = await axiosInstance.post("/order/update", requestBody);
+      console.log("Response received:", response);
 
       if (response.status === 200 || response.status === 201) {
         setShowAlert(true);
         toast.success("Order has been placed successfully!", {
           position: "top-right",
-          autoClose: 1500, // Reduced from 2000 to 1500
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -56,15 +54,10 @@ const CartPage = () => {
         });
       } else {
         setError("Unexpected response from server. Please try again.");
-        toast.error("Unexpected response from server. Please try again.", {
-          position: "top-right",
-          autoClose: 2000,
-        });
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to place order. Please try again.";
-      setError(errorMessage);
-      toast.error(errorMessage, {
+      setError("Failed to place order. Please try again.");
+      toast.error("Failed to place order. Please try again.", {
         position: "top-right",
         autoClose: 2000,
       });
@@ -75,25 +68,18 @@ const CartPage = () => {
 
   useEffect(() => {
     if (showAlert) {
-      const timer = setTimeout(() => {
+      setTimeout(() => {
         navigate("/pages/paymentPage", { replace: true });
-      }, 1500); // Reduced from 2000 to 1500
-      return () => clearTimeout(timer);
+      }, 2000);
     }
-  }, [showAlert]); // Removed navigate from dependencies as it's stable
-
+  }, [showAlert, navigate]);
+console.log(selectedCoupon)
   return (
     <div className="min-h-screen bg-gray-50">
-      <ToastContainer />
+      <ToastContainer /> {/* Add this inside your component */}
       <div className="w-full px-4 sm:px-6 py-8">
         <div className="max-w-full mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Cart</h1>
-
-          {error && (
-            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-              {error}
-            </div>
-          )}
 
           <div className="flex flex-col">
             <div className="w-full">
@@ -126,11 +112,9 @@ const CartPage = () => {
           </div>
 
           <button
-            className={`px-5 py-2 rounded-3 fw-bold shadow-lg ${
-              loading ? "bg-gray-400" : "bg-yellow-500 hover:bg-yellow-600"
-            } text-white transition-colors`}
+            className="px-5 py-2 rounded-3 fw-bold shadow-lg bg-yellow-500 text-white"
             onClick={handleCheckout}
-            disabled={loading || !cartId}
+            disabled={loading}
           >
             {loading ? "Processing..." : "Check Out"}
           </button>
