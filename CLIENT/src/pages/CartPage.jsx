@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import CartItem from "../components/Cart/CartItem.jsx"
+import CartItem from "../components/Cart/CartItem.jsx";
 import PromoCode from "../components/Cart/PromoCode.jsx";
-import EmptyCart from "../components/cart/EmptyCart.jsx";
+
 import ShowAddress from "../components/Cart/ShowAddress.jsx";
-import axiosInstance from "../axios/axiosInstance.js"; 
+import axiosInstance from "../axios/axiosInstance.js";
 
 const CartPage = () => {
   const [cartId, setCartId] = useState(null);
@@ -24,7 +24,6 @@ const CartPage = () => {
     setError("");
 
     if (!cartId || !selectedAddressId || !restaurantId) {
-     
       setError("Please select an address and add items to the cart.");
       return;
     }
@@ -72,7 +71,7 @@ const CartPage = () => {
       }, 2000);
     }
   }, [showAlert, navigate]);
-console.log(selectedCoupon)
+  console.log(selectedCoupon);
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer /> {/* Add this inside your component */}
@@ -89,24 +88,24 @@ console.log(selectedCoupon)
                   </h2>
                 </div>
 
-                <CartItem 
-                  setCartId={setCartId} 
-                  setRestaurantId={setRestaurantId} 
+                <CartItem
+                  setCartId={setCartId}
+                  setRestaurantId={setRestaurantId}
                   setItems={setItems}
                 />
               </div>
 
-              <PromoCode 
-                selectedCoupon={selectedCoupon} 
-                setSelectedCoupon={setSelectedCoupon} 
+              <PromoCode
+                selectedCoupon={selectedCoupon}
+                setSelectedCoupon={setSelectedCoupon}
               />
             </div>
           </div>
 
           <div>
-            <ShowAddress 
-              selectedAddressId={selectedAddressId} 
-              setSelectedAddressId={setSelectedAddressId} 
+            <ShowAddress
+              selectedAddressId={selectedAddressId}
+              setSelectedAddressId={setSelectedAddressId}
             />
           </div>
 
@@ -117,8 +116,6 @@ console.log(selectedCoupon)
           >
             {loading ? "Processing..." : "Check Out"}
           </button>
-
-          {!cartId && <EmptyCart />}
         </div>
       </div>
     </div>
