@@ -1,15 +1,14 @@
 import { useParams } from "react-router-dom";
-
 import { useState } from "react";
 import axiosInstance from "../axios/axiosInstance.js";
-import UseFetch from "../hooks/UseFetch.jsx"
+import UseFetch from "../hooks/UseFetch.jsx";
 
 
 const MenuPage = () => {
   let { id } = useParams();
   const [data, isLoading, error] = UseFetch(`/restaurant/id/${id}`);
   const [loading, setLoading] = useState(false);
-  const [localError, setLocalError] = useState(""); 
+  const [localError, setLocalError] = useState(""); // Renamed to avoid conflict with useFetch error
   const [showSuccess, setShowSuccess] = useState(false);
   
   // Initialize cart with default values
