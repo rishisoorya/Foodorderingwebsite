@@ -81,19 +81,25 @@ export async function modifyRestaurant(req, res) {
   }
 }
 
-export async function findRestaurantByName(req,res) {
+export async function findRestaurantByName(req, res) {
   try {
-    const {name} = req.params
-    const restaurant = await Restaurant.findOne({name:{$regex:name,$options:"i" }}).select("-password")
-    if(restaurant.length=== 0)  {
-return res.status(404).json({message:"Restaurant does not exist"})
+    const { name } = req.params;
+
+    const restaurant = await Restaurant.findOne({
+      name: { $regex: new RegExp(`^${name.trim()}$`, 'i') }
+    }).select("-password");
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant does not exist" });
     }
-    res.status(200).json({message:"Restaurant found successfully", restaurant})
+
+    res.status(200).json({ message: "Restaurant found successfully", restaurant });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
 
 export async function getAllRestaurant(req,res) {
   try {
