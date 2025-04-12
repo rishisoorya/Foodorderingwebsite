@@ -29,7 +29,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Check if current route is active
   const isActive = (path) => {
     return location.pathname === path;
   };
@@ -39,8 +38,8 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <div className="w-72 bg-gradient-to-b from-gray-900 to-gray-800 text-white flex flex-col p-6 fixed inset-0 shadow-xl">
         <div className="text-3xl font-bold mb-12 flex items-center">
-          <span className="bg-amber-500 text-gray-900 px-2 py-1 rounded mr-2">food</span>
-          <span className="text-amber-400">panda</span>
+          <span className="bg-pink-600 text-white px-2 py-1 rounded mr-2">food</span>
+          <span className="text-pink-400">panda</span>
         </div>
 
         <nav className="flex flex-col gap-3 flex-1">
@@ -48,8 +47,8 @@ const AdminDashboard = () => {
             to="/admin"
             className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
               isActive("/admin") 
-                ? "bg-amber-500 text-gray-900 font-medium shadow-md"
-                : "hover:bg-gray-700 hover:text-amber-300"
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
             }`}
           >
             <FiHome className="text-xl" />
@@ -61,8 +60,8 @@ const AdminDashboard = () => {
             to="/admin/restaurants"
             className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
               isActive("/admin/restaurants") 
-                ? "bg-amber-500 text-gray-900 font-medium shadow-md"
-                : "hover:bg-gray-700 hover:text-amber-300"
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
             }`}
           >
             <FiClipboard className="text-xl" />
@@ -74,8 +73,8 @@ const AdminDashboard = () => {
             to="/admin/users"
             className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
               isActive("/admin/users") 
-                ? "bg-amber-500 text-gray-900 font-medium shadow-md"
-                : "hover:bg-gray-700 hover:text-amber-300"
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
             }`}
           >
             <FiUsers className="text-xl" />
@@ -87,8 +86,8 @@ const AdminDashboard = () => {
             to="/admin/payments"
             className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
               isActive("/admin/payments") 
-                ? "bg-amber-500 text-gray-900 font-medium shadow-md"
-                : "hover:bg-gray-700 hover:text-amber-300"
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
             }`}
           >
             <FiCreditCard className="text-xl" />
