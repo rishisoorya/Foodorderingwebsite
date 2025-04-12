@@ -9,8 +9,35 @@ import AllRestaurants from "../pages/adminPages/AllRestaurants.jsx";
 import HomePage from "../pages/adminPages/HomePage.jsx";
 import AllUsers from "../pages/adminPages/AllUsers.jsx";
 import AllPaymentsPage from "../pages/adminPages/AllPaymentsPage.jsx";
+import RestaurantLogin from "../pages/restaurant/RestaurantLogin.jsx"
+import RestaurantSignup from "../pages/restaurant/RestaurantSignup.jsx";
+import RestaurantDashboard from "../pages/restaurant/RestaurantDashboard.jsx";
 
 const Route = createBrowserRouter([
+
+  {
+    path:"restaurant",
+        children:[
+      {
+        path:"login",
+        element:<RestaurantLogin/>,
+
+      },
+
+      {
+        path:"signup",
+        element:<RestaurantSignup/>,
+
+      },
+      {
+        path:"",
+        element:<RestaurantDashboard/>,
+
+      },
+    ]
+  },
+
+
   {
     path: "/",
     element: <AdminLayout />,

@@ -26,8 +26,8 @@ export const createRestaurant = async (req, res) => {
 
     await newRestaurant.save();
     const token = createToken(newRestaurant);
-    res.cookie("token", token, { httpOnly: true });
-    res.status(201).json({ message: "Restaurant registered successfully" });
+    res.cookie("token", token);
+    res.status(201).json({ message: "Restaurant registered successfully",newRestaurant });
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: "Server error", error });
@@ -49,7 +49,12 @@ export const restaurantLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = createToken(restaurant);
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, {
+      httpOnly: true, // Prevents access via JavaScript (XSS protection)
+      secure: true, // Works only on HTTPS (important in production)
+      sameSite: "None", // Allows cross-origin requests
+      path: "/", // Available for all routes
+    });
     res.status(200).json({ message: "Login successful"});
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -140,15 +145,19 @@ res.status(200).json({message:"Restaurant removed successfully"})
   }
 }
 
-export async function logout(req,res) {
+export async function logout(req, res) {
   try {
-    res.clearCookie("token")
-    res.status(200).json({message:"Logged Out Succesfully"})
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+    res.status(200).json({ message: "Logout Successfully" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error.message });
   }
 }
+
 
 export const verifyRestaurant = async (req, res) => {
   try {

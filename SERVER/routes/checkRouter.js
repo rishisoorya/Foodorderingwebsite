@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/user",userMiddleware ,checkUser );
 router.get("/admin",userMiddleware,roleMiddleware("admin") ,checkUser );
-
+router.get("/restaurant",userMiddleware,checkUser );
 
 export const checkRouter = router;
