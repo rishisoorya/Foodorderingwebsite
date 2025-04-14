@@ -11,29 +11,40 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Debug logs to check environment variables (check Render logs after deploy)
+console.log("CLIENT_URI:", process.env.CLIENT_URI);
+console.log("ADMIN_URI:", process.env.ADMIN_URI);
+
+// TEMPORARY CORS FOR TESTING (allow all origins)
 app.use(
   cors({
-    origin: [process.env.CLIENT_URI, process.env.ADMIN_URI],
-    credentials: true, // Allow cookies and credentials
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    origin: '*', // ❗️ TEMP: Allow all origins
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
       "Authorization",
       "X-Requested-With",
       "Accept",
-    ], // Allow these headers
+    ],
   })
 );
 
-// Handle preflight requests
-app.options("*", cors());
+// ✅ When deploying to production, switch to this version:
+// app.use(
+//   cors({
+//     origin: [process.env.CLIENT_URI, process.env.ADMIN_URI],
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     allowedHeaders: [
+//       "Content-Type",
+//       "Authorization",
+//       "X-Requested-With",
+//       "Accept",
+//     ],
+//   })
+// );
 
-// Verify environment variables
-if (!process.env.CLIENT_URI || !process.env.ADMIN_URI) {
-  console.warn(
-    "CLIENT_URL or ADMIN_URL is not set in the environment variables."
-  );
-}
 app.use(express.json());
 app.use(cookieParser());
 
