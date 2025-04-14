@@ -7,6 +7,7 @@ const menuItemSchema = new Schema({
   description: { type: String },
   image: { type: String },
   category: { type: String },
+  isAvailable: { type: Boolean, default: true },
 });
 
 const restaurantSchema = new Schema(
@@ -19,7 +20,7 @@ const restaurantSchema = new Schema(
       match: [/^\+91\d{10}$/, "Invalid Indian phone number"], // Validation for +91XXXXXXXXXX format
     },
     image: { type: String },
-    openStatus: { type: Boolean, default: true },
+    isOpen: { type: Boolean, default: true },
     customerRating: { type: Number, min: 1, max: 5 },
     menu: [menuItemSchema],
     createdAt: { type: Date, default: Date.now },

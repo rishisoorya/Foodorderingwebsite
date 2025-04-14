@@ -11,12 +11,13 @@ const AdminLayout = () => {
 
   const checkUser = async () => {
     try {
-      const response = await axiosInstance({
-        method: "GET",
-        url: "/check/admin",
-      });
+      // Check if current path is under "/admin" or not
+      const isAdminRoute = location.pathname.startsWith("/admin");
+      const url = isAdminRoute ? "/check/admin" : "/check/restaurant";
+
+      const response = await axiosInstance.get(url);
       console.log(response, "response=======");
-      dispatch(saveUserData(response?.data)); // Save user data if needed
+      dispatch(saveUserData(response?.data));
     } catch (error) {
       console.error(error);
       dispatch(clearUserdata());

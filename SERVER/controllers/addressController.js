@@ -2,7 +2,6 @@ import { Address } from "../models/addressModel.js";
 import { User } from "../models/userModel.js";
 import { isValidObjectId } from "mongoose";
 
-
 export async function createAddress(req, res) {
   try {
     const userId = req.user.id;
@@ -131,7 +130,6 @@ export async function updateAddress(req, res) {
     for (const field of requiredFields) {
       if (!updatedData[field]) {
         return res.status(400).json({ message: `${field} is required` });
-
       }
     }
 

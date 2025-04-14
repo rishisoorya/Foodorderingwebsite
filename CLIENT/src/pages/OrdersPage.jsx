@@ -51,26 +51,30 @@ const OrdersPage = () => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id.substring(0, 8)}...</td>
+                <tr key={order?._id}>
+                  <td>{order?._id?.substring(0, 8)}...</td>
                   <td>
                     <div>
-                      <strong>{order.user.name}</strong>
-                      <div className="text-muted small">{order.user.email}</div>
-                      <div className="text-muted small">{order.user.phone}</div>
+                      <strong>{order?.user?.name || "Unknown"}</strong>
+                      <div className="text-muted small">
+                        {order?.user?.email || "No Email"}
+                      </div>
+                      <div className="text-muted small">
+                        {order?.user?.phone || "No Phone"}
+                      </div>
                     </div>
                   </td>
-                  <td>{order.restaurant.name}</td>
+                  <td>{order?.restaurant?.name || "N/A"}</td>
                   <td>
                     <div className="d-flex flex-column">
-                      {order.cartId.items.map((item) => (
+                      {order?.cartId?.items?.map((item) => (
                         <div
-                          key={item._id}
+                          key={item?._id}
                           className="mb-2 d-flex align-items-center"
                         >
                           <img
-                            src={item.foodImage}
-                            alt={item.foodName}
+                            src={item?.foodImage}
+                            alt={item?.foodName}
                             className="rounded mr-2"
                             style={{
                               width: "40px",
@@ -79,9 +83,9 @@ const OrdersPage = () => {
                             }}
                           />
                           <div>
-                            {item.foodName} × {item.quantity}
+                            {item?.foodName} × {item?.quantity}
                             <div className="text-muted small">
-                              ₹{item.totalItemPrice}
+                              ₹{item?.totalItemPrice}
                             </div>
                           </div>
                         </div>
@@ -90,39 +94,44 @@ const OrdersPage = () => {
                   </td>
                   <td>
                     <div>
-                      <div>Total: ₹{order.totalAmount}</div>
-                      {order.coupon && (
+                      <div>Total: ₹{order?.totalAmount}</div>
+                      {order?.coupon && (
                         <div className="text-success small">
                           Discount applied
                         </div>
                       )}
                       <div className="font-weight-bold">
-                        Final: ₹{order.finalPrice}
+                        Final: ₹{order?.finalPrice}
                       </div>
                     </div>
                   </td>
                   <td>
                     <span
                       className={`px-2 py-1 rounded-full text-white text-sm font-medium ${
-                        order.status === "pending"
+                        order?.status === "pending"
                           ? "bg-yellow-500"
-                          : order.status === "completed"
+                          : order?.status === "completed" ||
+                            order?.status === "confirmed"
                           ? "bg-green-600"
-                          : order.status === "confirmed"
-                          ? "bg-green-600"
-                          : order.status === "cancelled"
+                          : order?.status === "cancelled"
                           ? "bg-red-600"
                           : "bg-gray-500"
                       }`}
                     >
-                      {order.status.charAt(0).toUpperCase() +
-                        order.status.slice(1)}
+                      {order?.status
+                        ? order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)
+                        : "Unknown"}
                     </span>
                   </td>
                   <td>
-                    {new Date(order.createdAt).toLocaleDateString()}
+                    {order?.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString()
+                      : "N/A"}
                     <div className="text-muted small">
-                      {new Date(order.createdAt).toLocaleTimeString()}
+                      {order?.createdAt
+                        ? new Date(order.createdAt).toLocaleTimeString()
+                        : ""}
                     </div>
                   </td>
                 </tr>

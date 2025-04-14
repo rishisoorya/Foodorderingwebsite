@@ -10,7 +10,7 @@ import {
   FiChevronRight,
   FiCreditCard,
 } from "react-icons/fi";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance from "../config/axiosInstance.jsx";
 import toast from "react-hot-toast";
 
 const AdminDashboard = () => {
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
       const response = await axiosInstance.post("/admin/logout");
       toast.success(response?.data?.message || "Logout successful");
       setTimeout(() => {
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       }, 300);
     } catch (error) {
       toast.error(error?.response?.data?.message || "Logout failed");

@@ -1,11 +1,10 @@
-
 import { Restaurant } from "../models/restaurantModel.js";
-import{cloudinaryInstance} from "../config/cloudinary.js";
+import { cloudinaryInstance } from "../config/cloudinary.js";
 
 export const addItemToMenu = async (req, res) => {
   try {
-    const  restaurantId = req.user.id;
-    const { name, price, description, category } = req.body;
+    const restaurantId = req.user.id;
+    const { name, price, description, category, isAvailable } = req.body;
     const restaurant = await Restaurant.findById(restaurantId);
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant does not exist" });
@@ -26,6 +25,7 @@ export const addItemToMenu = async (req, res) => {
       description,
       image: imageUri.url,
       category,
+      isAvailable,
     };
     restaurant.menu.push(newMenuItem);
     await restaurant.save();
@@ -40,15 +40,15 @@ export const addItemToMenu = async (req, res) => {
 
 export async function updateMenu(req, res) {
   try {
-    const  restaurantId  = req.user.id;
-    const { name, price, description, image, category } = req.body;
+    const restaurantId = req.user.id;
+    const { name, price, description, image, category, isAvailable } = req.body;
     const restaurant = await Restaurant.findById(restaurantId);
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant Not Found" });
     }
-    const  {menuItemId}  = req.params;
+    const { menuItemId } = req.params;
     const menuItem = restaurant.menu.id(menuItemId);
-    
+
     if (!menuItem) {
       return res.status(404).json({ message: "Menu item does not exist" });
     }
@@ -56,6 +56,7 @@ export async function updateMenu(req, res) {
     if (price) menuItem.price = price;
     if (description) menuItem.description = description;
     if (category) menuItem.category = category;
+    if (isAvailable !== undefined) menuItem.isAvailable = isAvailable;
     if (req.file) {
       if (menuItem.image) {
         const imagePublicId = menuItem.image.split("/").pop().split(".")[0];
@@ -126,14 +127,15 @@ export const getMenuItemById = async (req, res) => {
     }
     res.status(200).json({ menuItem });
   } catch (error) {
-    console.log(error);                                                
+    console.log(error);
     res.status(500).json({ message: "Server error", error });
   }
 };
 
 export const deleteMenuItem = async (req, res) => {
   try {
-    const { restaurantId, menuItemId } = req.params;
+    const restaurantId = req.user.id;
+    const { menuItemId } = req.params;
     const restaurant = await Restaurant.findById(restaurantId);
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
@@ -145,7 +147,7 @@ export const deleteMenuItem = async (req, res) => {
     await Restaurant.findByIdAndUpdate(
       restaurantId,
       {
-        $pull: { menu: { _id: menuItemId } }
+        $pull: { menu: { _id: menuItemId } },
       },
       { new: true }
     );

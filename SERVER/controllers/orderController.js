@@ -1,5 +1,5 @@
 import { Coupon } from "../models/couponModel.js";
-import {Order} from "../models/orderModel.js";
+import { Order } from "../models/orderModel.js";
 
 const ORDER_STATUS = [
   "pending",
@@ -153,7 +153,7 @@ export const updateOrderStatus = async (req, res) => {
 
 export const getAllRestaurantOrders = async (req, res) => {
   try {
-    const { restaurantId } = req.params;
+    const restaurantId = req.user.id;
     const orders = await Order.find({
       restaurant: restaurantId,
       status: { $ne: "cancelled" },

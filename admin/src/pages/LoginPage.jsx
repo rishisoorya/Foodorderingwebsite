@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance from "../config/axiosInstance.jsx";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

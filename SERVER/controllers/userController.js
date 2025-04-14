@@ -38,7 +38,7 @@ export async function login(req, res) {
       return res.status(404).json({ message: "Fill All Required Fields" });
     }
     const user = await User.findOne({ email: email }).select("role password");
-   
+
     if (!user) {
       return res.status(404).json({ message: "User Not Found" });
     }
@@ -53,7 +53,7 @@ export async function login(req, res) {
       sameSite: "None", // Allows cross-origin requests
       path: "/", // Available for all routes
     });
-    res.status(200).json({ message: "Logged in Successfully",user });
+    res.status(200).json({ message: "Logged in Successfully", user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -138,26 +138,28 @@ export async function logout(req, res) {
   }
 }
 
-export async function getAlluser(req,res) {
+export async function getAlluser(req, res) {
   try {
-    const users = await User.find({role:{$ne:"admin"}}).select("-password")
-    res.status(200).json({ message: "fetched all user",users });
+    const users = await User.find({ role: { $ne: "admin" } }).select(
+      "-password"
+    );
+    res.status(200).json({ message: "fetched all user", users });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
 
-export async function removeUser(req,res) {
+export async function removeUser(req, res) {
   try {
-    const {userId} = req.params
-const findUser = await User.findById(userId)
-    if(!findUser){
-return res.status(404).json({message:"No Restaurant found"})
+    const { userId } = req.params;
+    const findUser = await User.findById(userId);
+    if (!findUser) {
+      return res.status(404).json({ message: "No Restaurant found" });
     }
-const userDel = await User.findByIdAndDelete(userId)
-res.status(200).json({message:"Restaurant removed successfully"})
+    const userDel = await User.findByIdAndDelete(userId);
+    res.status(200).json({ message: "Restaurant removed successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });  
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
