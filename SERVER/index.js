@@ -11,44 +11,37 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Debug logs to check environment variables (check Render logs after deploy)
-console.log("CLIENT_URI:", process.env.CLIENT_URI);
-console.log("ADMIN_URI:", process.env.ADMIN_URI);
+// Define allowed origins from environment variables
+const allowedOrigins = [process.env.CLIENT_URI, process.env.ADMIN_URI];
 
-// TEMPORARY CORS FOR TESTING (allow all origins)
+// Configure CORS middleware
 app.use(
   cors({
-    origin: '*', // ❗️ TEMP: Allow all origins
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies and credentials
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allowed HTTP methods
     allowedHeaders: [
       "Content-Type",
       "Authorization",
       "X-Requested-With",
       "Accept",
-    ],
+    ], // Allowed headers
   })
 );
 
-// ✅ When deploying to production, switch to this version:
-// app.use(
-//   cors({
-//     origin: [process.env.CLIENT_URI, process.env.ADMIN_URI],
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-//     allowedHeaders: [
-//       "Content-Type",
-//       "Authorization",
-//       "X-Requested-With",
-//       "Accept",
-//     ],
-//   })
-// );
-
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// Connect to database
+// Connect to the database
 connectDB();
 
 // API routes
@@ -59,7 +52,7 @@ app.all("*", (req, res) => {
   res.status(404).json({ message: "Endpoint does not exist" });
 });
 
-// Start server
+// Start the server
 app.listen(port, () =>
   console.log(`Server running on port: http://localhost:${port}`)
 );
