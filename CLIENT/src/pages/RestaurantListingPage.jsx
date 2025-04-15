@@ -4,17 +4,30 @@ import UseFetch from '../hooks/UseFetch.jsx';
 
 function RestaurantListingPage() {
   const [data, isLoading, error] = UseFetch("/restaurant/all");
-  const restaurants = data?.restaurant || [];
+
+  // Adjust this based on your actual API response structure
+  const restaurantsArray = Array.isArray(data?.restaurant)
+    ? data.restaurant
+    : data?.findRestaurant
+      ? [data.findRestaurant]
+      : [];
+
   const [searchTerm, setSearchTerm] = useState('');
   const [openFilter, setOpenFilter] = useState('all');
 
-  const filteredRestaurants = restaurants.filter(restaurant => {
+  const filteredRestaurants = restaurantsArray.filter(restaurant => {
     const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesOpenStatus = 
-      openFilter === 'all' || 
-      (openFilter === 'open' && restaurant.isOpen) || 
-      (openFilter === 'closed' && !restaurant.isOpen);
-    
+
+    // Ensure isOpen is treated as boolean
+    const isOpen = typeof restaurant.isOpen === 'string'
+      ? restaurant.isOpen === 'true'
+      : !!restaurant.isOpen;
+
+    const matchesOpenStatus =
+      openFilter === 'all' ||
+      (openFilter === 'open' && isOpen) ||
+      (openFilter === 'closed' && !isOpen);
+
     return matchesSearch && matchesOpenStatus;
   });
 
@@ -43,7 +56,7 @@ function RestaurantListingPage() {
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">Discover Local Restaurants</h1>
           <p className="text-xl mb-8">Find your favorite food from the best restaurants in town</p>
-          
+
           {/* Search Bar */}
           <div className="max-w-md mx-auto relative">
             <input
@@ -77,7 +90,7 @@ function RestaurantListingPage() {
           <h2 className="text-2xl font-semibold text-gray-800">
             {filteredRestaurants.length} {filteredRestaurants.length === 1 ? 'Restaurant' : 'Restaurants'} Available
           </h2>
-          
+
           <div className="flex space-x-2">
             <button
               onClick={() => setOpenFilter('all')}
@@ -103,45 +116,51 @@ function RestaurantListingPage() {
         {/* Restaurant Grid */}
         {filteredRestaurants.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRestaurants.map((restaurant) => (
-              <div key={restaurant._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="relative">
-                  <img
-                    src={restaurant.image}
-                    alt={restaurant.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-semibold ${restaurant.isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {restaurant.isOpen ? 'Open Now' : 'Closed'}
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between items-start">
-                    <h3 className="text-xl font-bold text-gray-800 mb-1">{restaurant.name}</h3>
-                    <div className="flex items-center">
-                      <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <span className="ml-1 text-gray-600">4.5</span>
+            {filteredRestaurants.map((restaurant) => {
+              const isOpen = typeof restaurant.isOpen === 'string'
+                ? restaurant.isOpen === 'true'
+                : !!restaurant.isOpen;
+
+              return (
+                <div key={restaurant._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                  <div className="relative">
+                    <img
+                      src={restaurant.image}
+                      alt={restaurant.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-semibold ${isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      {isOpen ? 'Open Now' : 'Closed'}
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-2">{restaurant.phone}</p>
-                  <div className="flex items-center text-gray-500 mb-3">
-                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm">123 Main St, City</span>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">{restaurant.name}</h3>
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span className="ml-1 text-gray-600">4.5</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 mb-2">{restaurant.phone}</p>
+                    <div className="flex items-center text-gray-500 mb-3">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm">123 Main St, City</span>
+                    </div>
+
+                    <Link
+                      to={`/user/restaurant/${restaurant._id}`}
+                      className="mt-4 block text-center bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-lg transition-colors duration-300"
+                    >
+                      View Menu
+                    </Link>
                   </div>
-                  
-                  <Link
-                    to={`/user/restaurant/${restaurant._id}`}
-                    className="mt-4 block text-center bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-lg transition-colors duration-300"
-                  >
-                    View Menu
-                  </Link>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-12">
