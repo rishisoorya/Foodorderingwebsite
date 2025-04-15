@@ -11,31 +11,33 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Define allowed origins from environment variables
-const allowedOrigins = [process.env.CLIENT_URI, process.env.ADMIN_URI];
-
-// Configure CORS middleware
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: [
+      process.env.CLIENT_URL,
+      process.env.ADMIN_URL,
+      process.env.RESTAURANT_URL,
+    ],
     credentials: true, // Allow cookies and credentials
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allowed HTTP methods
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods
     allowedHeaders: [
       "Content-Type",
       "Authorization",
       "X-Requested-With",
       "Accept",
-    ], // Allowed headers
+    ], // Allow these headers
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
+
+// Verify environment variables
+if (!process.env.CLIENT_URL || !process.env.ADMIN_URL) {
+  console.warn(
+    "CLIENT_URL or ADMIN_URL is not set in the environment variables."
+  );
+}
 
 // Middleware
 app.use(express.json());
