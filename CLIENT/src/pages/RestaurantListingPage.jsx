@@ -161,7 +161,8 @@ function RestaurantListingPage() {
                 </div>
               );
             })}
-          </div>
+          </div> 
+          
         ) : (
           <div className="text-center py-12">
             <svg
