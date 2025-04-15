@@ -16,7 +16,7 @@ app.use(
     origin: [
       process.env.CLIENT_URL,
       process.env.ADMIN_URL,
-      process.env.RESTAURANT_URL,
+    
     ],
     credentials: true, // Allow cookies and credentials
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods

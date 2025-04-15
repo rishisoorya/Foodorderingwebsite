@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import MenuCard from '../components/MenuCard.jsx';
 import UseFetch from '../hooks/UseFetch.jsx';
 
-
 const RestaurantPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  
-  // Fetch restaurant data (assuming your endpoint returns a single restaurant)
+
+  // Fetch restaurant data
   const [restaurantData, isLoading, error] = UseFetch('/restaurant');
   const menuItems = restaurantData?.menu || [];
-  
+
   const categories = ['all', ...new Set(menuItems.map(item => item?.category))].filter(Boolean);
 
   const filteredItems = menuItems.filter(item => {
     const matchesCategory = activeCategory === 'all' || item?.category === activeCategory;
-    const matchesSearch = item?.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         item?.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = item?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item?.description?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -26,7 +25,7 @@ const RestaurantPage = () => {
     return (
       <div className="text-center py-20">
         <h2 className="text-xl text-red-600">Error loading menu</h2>
-        <button 
+        <button
           onClick={() => window.location.reload()}
           className="mt-4 px-4 py-2 bg-pink-600 text-white rounded"
         >
@@ -49,10 +48,14 @@ const RestaurantPage = () => {
           <div className="absolute inset-0 bg-black opacity-40"></div>
           <div className="absolute bottom-0 left-0 p-6 text-white">
             <h1 className="text-3xl font-bold">{restaurantData?.name || 'Our Restaurant'}</h1>
-            <div className="flex items-center mt-2">
+            <div className="flex items-center mt-2 space-x-3">
               <span>⭐ 4.8</span>
-              <span className="mx-2">•</span>
+              <span>•</span>
               <span>20-30 min delivery</span>
+              <span>•</span>
+              <span className={`font-semibold ${restaurantData?.isOpen ? 'text-green-400' : 'text-red-400'}`}>
+                {restaurantData?.isOpen ? 'Open Now' : 'Closed'}
+              </span>
             </div>
           </div>
         </div>
