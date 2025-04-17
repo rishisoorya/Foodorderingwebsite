@@ -11,20 +11,26 @@ export async function generateCoupon(req, res) {
       code,
       discountPercentage,
       minOrderValue,
-      MaxDiscValue,
+      maxDiscValue,
       expiryDate,
       isAvailable,
     } = req.body;
+    console.log(code)
+    console.log(discountPercentage)
+    console.log(minOrderValue)
+    console.log(maxDiscValue)
+    console.log(expiryDate)
     if (
       !code ||
       !discountPercentage ||
       !minOrderValue ||
-      !MaxDiscValue ||
+      !maxDiscValue ||
       !expiryDate
     ) {
       return res.status(401).json({ message: "All Feilds Are Required" });
     }
     const couponFound = await Coupon.findOne({ code: code });
+
     if (couponFound) {
       return res.status(400).json({ message: "Code is already in use" });
     }
@@ -32,7 +38,7 @@ export async function generateCoupon(req, res) {
       code,
       discountPercentage,
       minOrderValue,
-      MaxDiscValue,
+      MaxDiscValue:maxDiscValue,
       expiryDate,
       isAvailable,
     });

@@ -3,6 +3,7 @@ import { User } from "../models/userModel.js";
 import { isValidObjectId } from "mongoose";
 
 export async function createAddress(req, res) {
+  console.log(req.body)
   try {
     const userId = req.user.id;
 

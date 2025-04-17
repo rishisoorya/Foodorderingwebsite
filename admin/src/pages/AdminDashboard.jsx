@@ -9,6 +9,8 @@ import {
   FiLogOut,
   FiChevronRight,
   FiCreditCard,
+  FiCheckCircle,
+  FiTag
 } from "react-icons/fi";
 import axiosInstance from "../config/axiosInstance.jsx";
 import toast from "react-hot-toast";
@@ -70,6 +72,19 @@ const AdminDashboard = () => {
           </Link>
 
           <Link
+            to="/admin/verifications"
+            className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
+              isActive("/admin/verifications") 
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
+            }`}
+          >
+            <FiCheckCircle className="text-xl" />
+            <span>Verifications</span>
+            {isActive("/admin/verifications") && <FiChevronRight className="ml-auto" />}
+          </Link>
+
+          <Link
             to="/admin/users"
             className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
               isActive("/admin/users") 
@@ -93,6 +108,19 @@ const AdminDashboard = () => {
             <FiCreditCard className="text-xl" />
             <span>All Payments</span>
             {isActive("/admin/payments") && <FiChevronRight className="ml-auto" />}
+          </Link>
+
+          <Link
+            to="/admin/coupons"
+            className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
+              isActive("/admin/coupons") 
+                ? "bg-pink-600 text-white font-medium shadow-md"
+                : "hover:bg-gray-700 hover:text-pink-300"
+            }`}
+          >
+            <FiTag className="text-xl" />
+            <span>Coupons</span>
+            {isActive("/admin/coupons") && <FiChevronRight className="ml-auto" />}
           </Link>
 
           <button

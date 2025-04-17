@@ -17,6 +17,8 @@ import MenuCreateForm from "../pages/restaurant/MenuCreateForm.jsx";
 import RestaurantPaymentPage from "../pages/restaurant/RestaurantPaymentPage.jsx";
 import RestaurantProile from "../pages/restaurant/RestaurantProfile.jsx";
 import RestaurantHomePage from "../pages/restaurant/RestaurantHomePage.jsx";
+import CouponCreate from "../pages/adminPages/CouponCreate.jsx";
+import RestaurantVerification from "../pages/adminPages/RestaurantVerification.jsx";
 
 const Route = createBrowserRouter([
   {
@@ -35,8 +37,11 @@ const Route = createBrowserRouter([
         path: "",
         element: <AdminLanding />,
       },
+      
+    
       {
         element: <ProtectRoutes />,
+        
         children: [
           {
             path: "restaurant",
@@ -85,6 +90,14 @@ const Route = createBrowserRouter([
               {
                 path: "payments", // /dashboard/restaurants
                 element: <AllPaymentsPage />,
+              },
+              {
+                path:"/admin/coupons",
+                element:<CouponCreate/>,
+              },
+              {
+                path:"/admin/restaurants",
+                element:<RestaurantVerification/>,
               },
             ],
           },

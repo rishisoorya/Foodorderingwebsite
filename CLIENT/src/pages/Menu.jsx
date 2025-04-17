@@ -88,12 +88,12 @@ const MenuPage = () => {
           <div className="flex items-center mb-4">
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${
-                restaurant.openStatus
+                restaurant.isOpen
                   ? "bg-green-100 text-green-800"
                   : "bg-red-100 text-red-800"
               }`}
             >
-              {restaurant.openStatus ? "Open Now" : "Closed"}
+              {restaurant.isOpen ? "Open Now" : "Closed"}
             </span>
           </div>
           <div className="mb-4">
