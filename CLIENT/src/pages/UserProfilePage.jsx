@@ -12,7 +12,7 @@ export default function UserProfilePage() {
 
   // Safely extract data with defaults
   const profile = userData?.user || {};
-  console.log(addressData)
+  
   const address = addressData?.address || null;
   const orders = Array.isArray(ordersData?.orders) ? ordersData.orders : [];
 
