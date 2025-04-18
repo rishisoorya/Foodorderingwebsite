@@ -67,7 +67,7 @@ function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="/"
+                  href="/home"
                   className="text-gray-600 hover:text-pink-600 transition-colors duration-300 flex items-center"
                 >
                   <svg

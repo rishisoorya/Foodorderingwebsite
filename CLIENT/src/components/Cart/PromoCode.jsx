@@ -40,7 +40,7 @@ const PromoCode = ({ selectedCoupon, setSelectedCoupon }) => {
       {/* Discount Message */}
       {discount > 0 && (
         <p className="mt-2 text-sm text-green-600">
-          ${discount.toFixed(2)} discount applied!
+          ₹{discount.toFixed(2)} discount applied!
         </p>
       )}
 
@@ -61,11 +61,11 @@ const PromoCode = ({ selectedCoupon, setSelectedCoupon }) => {
                 <div className="flex justify-between items-center">
                   <span className="font-medium">{coupon.code}</span>
                   <span className="text-sm text-gray-600">
-                    {coupon.discountPercentage}% off up to ${coupon.MaxDiscValue}
+                    {coupon.discountPercentage}% off up to ₹{coupon.MaxDiscValue}
                   </span>
                 </div>
                 <p className="text-sm text-gray-500">
-                  Min Order: ${coupon.minOrderValue} | Expires on: {new Date(coupon.expiryDate).toLocaleDateString()}
+                  Min Order: ₹{coupon.minOrderValue} | Expires on: {new Date(coupon.expiryDate).toLocaleDateString()}
                 </p>
               </li>
             ))}

@@ -19,7 +19,7 @@ function Header() {
       <nav className="border-gray-200 px-4 lg:px-6 py-3">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/home" className="flex items-center">
             <span className="self-center text-2xl font-bold whitespace-nowrap bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               foodpanda
             </span>

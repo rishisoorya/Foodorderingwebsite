@@ -3,20 +3,12 @@ import { useState } from "react";
 import axiosInstance from "../axios/axiosInstance.js";
 import UseFetch from "../hooks/UseFetch.jsx";
 
-
 const MenuPage = () => {
   let { id } = useParams();
   const [data, isLoading, error] = UseFetch(`/restaurant/id/${id}`);
-  const [loading, setLoading] = useState(false);
-  const [localError, setLocalError] = useState(""); // Renamed to avoid conflict with useFetch error
+  const [loadingId, setLoadingId] = useState(null);
+  const [localError, setLocalError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
-  
-  // Initialize cart with default values
-  const [cart, setCart] = useState({
-    foodId: "",
-    restaurantId: "",
-    quantity: 1,
-  });
 
   if (isLoading) {
     return <div className="text-center py-8">Loading menu...</div>;
@@ -39,7 +31,7 @@ const MenuPage = () => {
 
   const handleAddToCart = async (item) => {
     setLocalError("");
-    setLoading(true);
+    setLoadingId(item._id);
 
     try {
       const response = await axiosInstance.post("/cart/item", {
@@ -61,20 +53,18 @@ const MenuPage = () => {
         "Failed to add item to cart. Please check if any item from a different restaurant is already in your cart."
       );
     } finally {
-      setLoading(false);
+      setLoadingId(null);
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Success Notification */}
       {showSuccess && (
         <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50">
           Item added to cart successfully!
         </div>
       )}
 
-      {/* Restaurant Header */}
       <div className="flex flex-col md:flex-row gap-6 mb-8">
         <div className="md:w-1/3">
           <img
@@ -103,11 +93,9 @@ const MenuPage = () => {
         </div>
       </div>
 
-      {/* Menu Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-6 border-b pb-2">Our Menu</h2>
 
-        {/* Error Message */}
         {localError && (
           <div className="mb-4 p-4 bg-red-100 text-red-700 rounded">
             {localError}
@@ -119,7 +107,7 @@ const MenuPage = () => {
             {restaurant.menu.map((item) => (
               <div
                 key={item._id}
-                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
               >
                 <div className="h-48 overflow-hidden">
                   <img
@@ -128,7 +116,7 @@ const MenuPage = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex-grow">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold">{item.name}</h3>
                     <span className="text-lg font-bold text-gray-800">
@@ -140,14 +128,15 @@ const MenuPage = () => {
                     {item.category}
                   </span>
                 </div>
-                <div className="p-4">
+                <div className="p-4 mt-auto">
                   <button
-                    variant="warning"
-                    className="w-full px-4 add-to-cart-btn"
+                    className={`w-full px-6 py-3 bg-pink-600 text-white rounded-md hover:bg-pink-700 ${
+                      loadingId === item._id ? "opacity-70 cursor-not-allowed" : ""
+                    }`}
                     onClick={() => handleAddToCart(item)}
-                    disabled={loading}
+                    disabled={loadingId === item._id}
                   >
-                    {loading ? "Adding..." : "Add To Cart"}
+                    {loadingId === item._id ? "Adding..." : "Add To Cart"}
                   </button>
                 </div>
               </div>

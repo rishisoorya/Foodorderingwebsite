@@ -38,7 +38,7 @@ function Userheader() {
       <nav className="border-gray-200 px-4 lg:px-6 py-3">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/home" className="flex items-center">
             <span className="self-center text-2xl font-bold whitespace-nowrap bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               foodpanda
             </span>
@@ -172,7 +172,7 @@ function Userheader() {
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                 <Link
-                  to="/"
+                  to="/home"
                   onClick={() => handleLinkClick("home")}
                   className={`block py-2 pr-4 pl-3 rounded lg:bg-transparent lg:p-0 ${
                     activeLink === "home"
