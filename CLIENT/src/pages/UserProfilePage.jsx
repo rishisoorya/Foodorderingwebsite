@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import UseFetch from "../hooks/UseFetch.jsx";
 
@@ -6,6 +6,7 @@ export default function UserProfilePage() {
   const [userData, isUserLoading, userError] = UseFetch("/user/profile");
   const [addressData, isAddressLoading, addressError] = UseFetch("/address/get/getAllAddress");
   const [ordersData, isOrdersLoading, ordersError] = UseFetch("/order/get/all");
+  const [expandedOrder, setExpandedOrder] = useState(null);
 
   const profile = userData?.user || {};
   const address = addressData?.address || null;
@@ -13,10 +14,10 @@ export default function UserProfilePage() {
 
   if (isUserLoading || isAddressLoading || isOrdersLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-pink-50">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
         <div className="flex flex-col items-center">
           <div className="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-lg text-pink-700">Loading your profile...</p>
+          <p className="mt-4 text-lg text-pink-700 font-medium">Loading your profile...</p>
         </div>
       </div>
     );
@@ -24,18 +25,18 @@ export default function UserProfilePage() {
 
   if (userError) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-pink-50">
-        <div className="max-w-md p-8 bg-white rounded-xl shadow-lg text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
+        <div className="max-w-md p-8 bg-white rounded-2xl shadow-xl text-center">
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-16 0 9 9 0 0116 0z"></path>
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Error Loading Profile</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Profile</h3>
           <p className="text-gray-600 mb-6">{userError.message}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+            className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition-all shadow-md"
           >
             Try Again
           </button>
@@ -44,13 +45,17 @@ export default function UserProfilePage() {
     );
   }
 
+  const toggleOrder = (orderId) => {
+    setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
   const calculateDiscount = (order) => {
     if (!order?.coupon || !order?.totalAmount || !order?.finalPrice) return "0.00";
     return (order.totalAmount - order.finalPrice).toFixed(2);
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
 
@@ -59,15 +64,15 @@ export default function UserProfilePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-12 text-center">
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-3">
-            Welcome Back, <span className="text-pink-600">{profile.name?.split(' ')[0] || 'User'}</span>
+            Welcome Back, <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">{profile.name?.split(' ')[0] || 'User'}</span>
           </h1>
           <p className="text-xl text-gray-600">Manage your account and orders</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="bg-gradient-to-r from-pink-500 to-pink-600 h-32 flex items-end justify-center pb-8">
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+              <div className="bg-gradient-to-r from-pink-500 to-purple-600 h-32 flex items-end justify-center pb-8">
                 <div className="relative">
                   <div className="absolute -inset-2 bg-white rounded-full opacity-20"></div>
                   <div className="relative h-24 w-24 rounded-full border-4 border-white shadow-xl overflow-hidden">
@@ -111,12 +116,12 @@ export default function UserProfilePage() {
             </div>
 
             {address ? (
-              <div className="bg-white rounded-2xl shadow-lg p-6">
+              <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-gray-900">Default Address</h3>
                   <Link
                     to="/pages/UpdateAddressPage"
-                    className="text-pink-600 hover:text-pink-700 flex items-center"
+                    className="text-pink-600 hover:text-pink-700 flex items-center font-medium"
                   >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -154,7 +159,7 @@ export default function UserProfilePage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+              <div className="bg-white rounded-2xl shadow-xl p-8 text-center border border-gray-100">
                 <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
@@ -164,7 +169,7 @@ export default function UserProfilePage() {
                 <p className="text-gray-600 mb-6">Add an address for faster checkout</p>
                 <Link
                   to="/pages/UpdateAddressPage"
-                  className="inline-block px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+                  className="inline-block px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition-all shadow-md font-medium"
                 >
                   Add Address
                 </Link>
@@ -173,18 +178,21 @@ export default function UserProfilePage() {
           </div>
 
           <div className="lg:col-span-8">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="px-6 py-5 bg-gradient-to-r from-pink-500 to-pink-600">
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+              <div className="px-6 py-5 bg-gradient-to-r from-pink-500 to-purple-600">
                 <h2 className="text-2xl font-bold text-white">Your Orders</h2>
               </div>
               
               <div className="p-6">
                 {orders.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {orders.map((order) => (
-                      <div key={order._id || Math.random().toString(36).substring(2, 9)} className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-200">
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
-                          <div>
+                      <div key={order._id || Math.random().toString(36).substring(2, 9)} className="border border-gray-200 rounded-xl overflow-hidden">
+                        <button
+                          onClick={() => toggleOrder(order._id)}
+                          className="w-full p-5 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="text-left">
                             <p className="text-lg font-bold text-gray-900">
                               Order #{order._id?.slice(-6).toUpperCase() || "N/A"}
                             </p>
@@ -192,52 +200,68 @@ export default function UserProfilePage() {
                               {order.createdAt ? formatDate(order.createdAt) : "N/A"}
                             </p>
                           </div>
-                          <span className={`mt-2 sm:mt-0 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                            order.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : order.status === "delivered"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}>
-                            {order.status
-                              ? order.status.charAt(0).toUpperCase() + order.status.slice(1)
-                              : "N/A"}
-                          </span>
-                        </div>
-
-                        <div className="mb-5">
-                          <p className="font-bold text-gray-900 mb-3">{order.restaurant?.name || "N/A"}</p>
-                          
-                          <ul className="divide-y divide-gray-200">
-                            {Array.isArray(order.cartId?.items) && order.cartId.items.length > 0 ? (
-                              order.cartId.items.map((item) => (
-                                <li key={item._id || Math.random().toString(36).substring(2, 9)} className="py-3 flex justify-between">
-                                  <span className="text-gray-900">
-                                    {item.quantity || 0} × {item.foodName || "Unknown Item"}
-                                  </span>
-                                  <span className="text-gray-900 font-medium">
-                                    ₹{item.totalItemPrice?.toFixed(2) || "0.00"}
-                                  </span>
-                                </li>
-                              ))
-                            ) : (
-                              <li className="py-3 text-gray-500">No items in this order</li>
-                            )}
-                          </ul>
-                        </div>
-
-                        <div className="border-t border-gray-200 pt-4">
-                          {order.coupon && (
-                            <div className="flex justify-between mb-2 text-green-600">
-                              <span>Discount ({order.coupon.discountPercentage || 0}%)</span>
-                              <span>-₹{calculateDiscount(order)}</span>
-                            </div>
-                          )}
-                          <div className="flex justify-between text-lg font-bold">
-                            <span>Total</span>
-                            <span>₹{order.finalPrice?.toFixed(2) || "0.00"}</span>
+                          <div className="flex items-center">
+                            <span className={`mr-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                              order.status === "pending"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : order.status === "delivered"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}>
+                              {order.status
+                                ? order.status.charAt(0).toUpperCase() + order.status.slice(1)
+                                : "N/A"}
+                            </span>
+                            <svg
+                              className={`w-5 h-5 text-gray-500 transform transition-transform ${
+                                expandedOrder === order._id ? "rotate-180" : ""
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                           </div>
-                        </div>
+                        </button>
+
+                        {expandedOrder === order._id && (
+                          <div className="px-5 pb-5 pt-2 border-t border-gray-200">
+                            <div className="mb-4">
+                              <p className="font-bold text-gray-900 mb-3">{order.restaurant?.name || "N/A"}</p>
+                              
+                              <ul className="divide-y divide-gray-200">
+                                {Array.isArray(order.cartId?.items) && order.cartId.items.length > 0 ? (
+                                  order.cartId.items.map((item) => (
+                                    <li key={item._id || Math.random().toString(36).substring(2, 9)} className="py-3 flex justify-between">
+                                      <span className="text-gray-900">
+                                        {item.quantity || 0} × {item.foodName || "Unknown Item"}
+                                      </span>
+                                      <span className="text-gray-900 font-medium">
+                                        ₹{item.totalItemPrice?.toFixed(2) || "0.00"}
+                                      </span>
+                                    </li>
+                                  ))
+                                ) : (
+                                  <li className="py-3 text-gray-500">No items in this order</li>
+                                )}
+                              </ul>
+                            </div>
+
+                            <div className="border-t border-gray-200 pt-4">
+                              {order.coupon && (
+                                <div className="flex justify-between mb-2 text-green-600">
+                                  <span>Discount ({order.coupon.discountPercentage || 0}%)</span>
+                                  <span>-₹{calculateDiscount(order)}</span>
+                                </div>
+                              )}
+                              <div className="flex justify-between text-lg font-bold">
+                                <span>Total</span>
+                                <span>₹{order.finalPrice?.toFixed(2) || "0.00"}</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -252,7 +276,7 @@ export default function UserProfilePage() {
                     <p className="text-gray-600 mb-6">Your order history will appear here once you start shopping</p>
                     <Link
                       to="/"
-                      className="inline-flex items-center px-8 py-3 bg-pink-600 text-white rounded-lg font-medium hover:bg-pink-700 transition-colors"
+                      className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-md"
                     >
                       Browse Restaurants
                     </Link>

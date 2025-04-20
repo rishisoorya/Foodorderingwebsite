@@ -80,7 +80,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-pink-600">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-pink-600 to-purple-600">
       <div className="hidden md:block md:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/30 z-10"></div>
         <div className="absolute inset-0 bg-noise opacity-10 z-10"></div>
@@ -109,7 +109,7 @@ const SignupPage = () => {
             )}
 
             <div className="text-center mb-10">
-              <div className="inline-flex items-center justify-center bg-white rounded-full w-20 h-20 mb-6 shadow-lg transform transition-all hover:scale-105">
+              <div className="inline-flex items-center justify-center bg-gradient-to-br from-white to-pink-100 rounded-full w-20 h-20 mb-6 shadow-lg transform transition-all hover:scale-105">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-10 w-10 text-pink-600"
@@ -331,7 +331,7 @@ const SignupPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full flex justify-center items-center px-8 py-4 border border-transparent rounded-xl text-lg font-medium text-pink-600 bg-white hover:bg-pink-50 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-lg transform transition-all hover:scale-[1.02] active:scale-100 ${
+                  className={`w-full flex justify-center items-center px-8 py-4 border border-transparent rounded-xl text-lg font-medium text-pink-600 bg-gradient-to-br from-white to-pink-100 hover:from-pink-50 hover:to-white focus:outline-none focus:ring-4 focus:ring-white/30 shadow-lg transform transition-all hover:scale-[1.02] active:scale-100 ${
                     isSubmitting ? "opacity-80 cursor-not-allowed" : ""
                   }`}
                 >

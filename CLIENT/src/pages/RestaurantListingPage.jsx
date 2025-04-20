@@ -51,8 +51,12 @@ function RestaurantListingPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="bg-pink-600 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">Discover Local Restaurants</h1>
-          <p className="text-xl mb-8">Find your favorite food from the best restaurants in town</p>
+          <h1 className="text-4xl font-bold mb-4">
+            Discover Local Restaurants
+          </h1>
+          <p className="text-xl mb-8">
+            Find your favorite food from the best restaurants in town
+          </p>
           <div className="max-w-md mx-auto relative">
             <input
               type="text"
@@ -83,7 +87,8 @@ function RestaurantListingPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
             {filteredRestaurants.length}{" "}
-            {filteredRestaurants.length === 1 ? "Restaurant" : "Restaurants"} Available
+            {filteredRestaurants.length === 1 ? "Restaurant" : "Restaurants"}{" "}
+            Available
           </h2>
           <div className="flex space-x-2">
             <button
@@ -205,9 +210,12 @@ function RestaurantListingPage() {
                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">No restaurants found</h3>
+            <h3 className="mt-2 text-lg font-medium text-gray-900">
+              No restaurants found
+            </h3>
             <p className="mt-1 text-gray-500">
-              Try adjusting your search or filter to find what you're looking for.
+              Try adjusting your search or filter to find what you're looking
+              for.
             </p>
           </div>
         )}
