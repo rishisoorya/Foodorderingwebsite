@@ -5,7 +5,6 @@ import UseFetch from "../hooks/UseFetch.jsx";
 function RestaurantListingPage() {
   const [data, isLoading, error] = UseFetch("/restaurant/all");
 
-  // Adjust this based on your actual API response structure
   const restaurantsArray = Array.isArray(data?.restaurant)
     ? data.restaurant
     : data?.findRestaurant
@@ -20,11 +19,7 @@ function RestaurantListingPage() {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-    // Ensure isOpen is treated as boolean
-    const isOpen =
-      typeof restaurant.isOpen === "string"
-        ? restaurant.isOpen === "true"
-        : !!restaurant.isOpen;
+    const isOpen = restaurant.isOpen;
 
     const matchesOpenStatus =
       openFilter === "all" ||
@@ -54,17 +49,10 @@ function RestaurantListingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
       <div className="bg-pink-600 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">
-            Discover Local Restaurants
-          </h1>
-          <p className="text-xl mb-8">
-            Find your favorite food from the best restaurants in town
-          </p>
-
-          {/* Search Bar */}
+          <h1 className="text-4xl font-bold mb-4">Discover Local Restaurants</h1>
+          <p className="text-xl mb-8">Find your favorite food from the best restaurants in town</p>
           <div className="max-w-md mx-auto relative">
             <input
               type="text"
@@ -91,15 +79,12 @@ function RestaurantListingPage() {
         </div>
       </div>
 
-      {/* Filter Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
             {filteredRestaurants.length}{" "}
-            {filteredRestaurants.length === 1 ? "Restaurant" : "Restaurants"}{" "}
-            Available
+            {filteredRestaurants.length === 1 ? "Restaurant" : "Restaurants"} Available
           </h2>
-
           <div className="flex space-x-2">
             <button
               onClick={() => setOpenFilter("all")}
@@ -134,18 +119,17 @@ function RestaurantListingPage() {
           </div>
         </div>
 
-        {/* Restaurant Grid */}
         {filteredRestaurants.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredRestaurants.map((restaurant) => {
-              const isOpen =
-                typeof restaurant.isOpen === "string"
-                  ? restaurant.isOpen === "true"
-                  : !!restaurant.isOpen;
+              const isOpen = restaurant.isOpen;
+              const CardWrapper = isOpen ? Link : "div";
 
               return (
-                <div
+                <CardWrapper
                   key={restaurant._id}
+                  to={isOpen ? `/user/restaurant/${restaurant._id}` : undefined}
+                  style={{ cursor: isOpen ? "pointer" : "not-allowed" }}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   <div className="relative">
@@ -177,7 +161,9 @@ function RestaurantListingPage() {
                         >
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
-                        <span className="ml-1 text-gray-600">4.5</span>
+                        <span className="ml-1 text-gray-600">
+                          {restaurant.rating || "4.5"}
+                        </span>
                       </div>
                     </div>
                     <p className="text-gray-600 mb-2">{restaurant.phone}</p>
@@ -195,15 +181,11 @@ function RestaurantListingPage() {
                       </svg>
                       <span className="text-sm">123 Main St, City</span>
                     </div>
-
-                    <Link
-                      to={`/user/restaurant/${restaurant._id}`}
-                      className="mt-4 block text-center bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-lg transition-colors duration-300"
-                    >
-                      View Menu
-                    </Link>
+                    <div className="mt-4 block text-center bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-lg transition-colors duration-300">
+                      {isOpen ? "View Menu" : "Currently Closed"}
+                    </div>
                   </div>
-                </div>
+                </CardWrapper>
               );
             })}
           </div>
@@ -223,12 +205,9 @@ function RestaurantListingPage() {
                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">
-              No restaurants found
-            </h3>
+            <h3 className="mt-2 text-lg font-medium text-gray-900">No restaurants found</h3>
             <p className="mt-1 text-gray-500">
-              Try adjusting your search or filter to find what you're looking
-              for.
+              Try adjusting your search or filter to find what you're looking for.
             </p>
           </div>
         )}

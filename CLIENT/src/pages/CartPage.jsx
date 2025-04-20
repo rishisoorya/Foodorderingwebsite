@@ -91,25 +91,6 @@ const CartPage = () => {
                 <div className="flex items-center mb-6">
                   <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mr-3">
                     <svg className="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path>
-                    </svg>
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-800">Promo Code</h2>
-                </div>
-                <PromoCode
-                  selectedCoupon={selectedCoupon}
-                  setSelectedCoupon={setSelectedCoupon}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:w-1/3 space-y-6">
-            <div className="bg-white rounded-3xl shadow-sm border border-pink-100 overflow-hidden">
-              <div className="p-6">
-                <div className="flex items-center mb-6">
-                  <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
@@ -122,6 +103,25 @@ const CartPage = () => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="lg:w-1/3 space-y-6">
+            <div className="bg-white rounded-3xl shadow-sm border border-pink-100 overflow-hidden">
+              <div className="p-6">
+                <div className="flex items-center mb-6">
+                  <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mr-3">
+                    <svg className="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-800">Apply Coupon</h2>
+                </div>
+                <PromoCode
+                  selectedCoupon={selectedCoupon}
+                  setSelectedCoupon={setSelectedCoupon}
+                />
+              </div>
+            </div>
 
             <div className="bg-white rounded-3xl shadow-sm border border-pink-100 overflow-hidden p-6">
               <div className="space-y-6">
@@ -130,6 +130,27 @@ const CartPage = () => {
                     <p className="font-medium">{error}</p>
                   </div>
                 )}
+
+                <div className="bg-pink-50 rounded-xl p-4">
+                  <div className="flex justify-between mb-2">
+                    <span className="text-gray-600">Subtotal</span>
+                    <span className="font-medium">${items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-gray-600">Delivery Fee</span>
+                    <span className="font-medium">$2.99</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-gray-600">Discount</span>
+                    <span className="font-medium text-green-600">-${selectedCoupon ? "5.00" : "0.00"}</span>
+                  </div>
+                  <div className="border-t border-pink-100 pt-3 mt-3">
+                    <div className="flex justify-between font-bold text-lg">
+                      <span>Total</span>
+                      <span>${(items.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 2.99 - (selectedCoupon ? 5 : 0)).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
 
                 <button
                   onClick={handleCheckout}

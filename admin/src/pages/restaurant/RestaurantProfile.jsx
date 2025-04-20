@@ -9,6 +9,7 @@ function RestaurantProfile() {
   );
   const [selectedStatus, setSelectedStatus] = useState("");
   const [newImageFile, setNewImageFile] = useState(null);
+  const [newRating, setNewRating] = useState(""); // New rating state
 
   if (isLoading)
     return (
@@ -30,10 +31,10 @@ function RestaurantProfile() {
       });
       toast.success(`Restaurant marked as ${selectedStatus.toUpperCase()}`, {
         style: {
-          background: '#f9fafb',
-          color: '#065f46',
-          border: '1px solid #a7f3d0'
-        }
+          background: "#f9fafb",
+          color: "#065f46",
+          border: "1px solid #a7f3d0",
+        },
       });
       refetch();
       setSelectedStatus("");
@@ -41,10 +42,10 @@ function RestaurantProfile() {
       console.error("Status update failed:", err);
       toast.error("Failed to update status", {
         style: {
-          background: '#fef2f2',
-          color: '#b91c1c',
-          border: '1px solid #fecaca'
-        }
+          background: "#fef2f2",
+          color: "#b91c1c",
+          border: "1px solid #fecaca",
+        },
       });
     }
   };
@@ -61,10 +62,10 @@ function RestaurantProfile() {
       });
       toast.success("Image uploaded successfully!", {
         style: {
-          background: '#f9fafb',
-          color: '#065f46',
-          border: '1px solid #a7f3d0'
-        }
+          background: "#f9fafb",
+          color: "#065f46",
+          border: "1px solid #a7f3d0",
+        },
       });
       refetch();
       setNewImageFile(null);
@@ -72,17 +73,43 @@ function RestaurantProfile() {
       console.error("Image upload failed:", err);
       toast.error("Failed to upload image", {
         style: {
-          background: '#fef2f2',
-          color: '#b91c1c',
-          border: '1px solid #fecaca'
-        }
+          background: "#fef2f2",
+          color: "#b91c1c",
+          border: "1px solid #fecaca",
+        },
+      });
+    }
+  };
+
+  const handleRatingUpdate = async () => {
+    try {
+      await axiosInstance.put("/restaurant/update", {
+        rating: Number(newRating),
+      });
+      toast.success(`Rating updated to ${newRating}`, {
+        style: {
+          background: "#f9fafb",
+          color: "#065f46",
+          border: "1px solid #a7f3d0",
+        },
+      });
+      refetch();
+      setNewRating("");
+    } catch (err) {
+      console.error("Rating update failed:", err);
+      toast.error("Failed to update rating", {
+        style: {
+          background: "#fef2f2",
+          color: "#b91c1c",
+          border: "1px solid #fecaca",
+        },
       });
     }
   };
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Header Section */}
+      {/* Header */}
       <div className="bg-pink-50 p-8 md:p-12">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
@@ -149,6 +176,7 @@ function RestaurantProfile() {
               </h2>
 
               <div className="space-y-5">
+                {/* Restaurant Info */}
                 <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">
                     Restaurant Information
@@ -173,6 +201,10 @@ function RestaurantProfile() {
                       >
                         {findRestaurant.isOpen ? "Open" : "Closed"}
                       </span>
+                    </p>
+                    <p>
+                      <span className="font-medium text-pink-600">Rating:</span>{" "}
+                      {findRestaurant.rating ?? "Not Rated"}
                     </p>
                   </div>
                 </div>
@@ -205,6 +237,42 @@ function RestaurantProfile() {
                     </button>
                   </div>
                 </div>
+
+                {/* Rating Update */}
+                <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                    Update Restaurant Rating
+                  </h3>
+                  <div className="space-y-4">
+                    <input
+                      type="number"
+                      value={newRating}
+                      onChange={(e) => setNewRating(e.target.value)}
+                      placeholder="Enter new rating (1 - 5)"
+                      min={1}
+                      max={5}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+                    />
+                    <button
+                      onClick={handleRatingUpdate}
+                      disabled={
+                        !newRating ||
+                        Number(newRating) < 1 ||
+                        Number(newRating) > 5
+                      }
+                      className={`w-full py-3 px-4 rounded-xl font-medium transition duration-300 ${
+                        newRating &&
+                        Number(newRating) >= 1 &&
+                        Number(newRating) <= 5
+                          ? "bg-pink-600 hover:bg-pink-700 text-white shadow-md"
+                          : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      }`}
+                    >
+                      Update Rating
+                    </button>
+                  </div>
+                </div>
+                {/* End Rating Section */}
               </div>
             </div>
           </div>

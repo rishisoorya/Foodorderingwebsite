@@ -70,26 +70,34 @@ export const restaurantLogin = async (req, res) => {
 export async function modifyRestaurant(req, res) {
   try {
     const restaurantId = req.user.id;
-    console.log(restaurantId);
+    
+
     const { name, email, phone, rating, isOpen } = req.body;
 
-    const restaurant = await Restaurant.findById(restaurantId).select(
-      "-password"
-    );
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
     if (name) restaurant.name = name;
     if (email) restaurant.email = email;
     if (phone) restaurant.phone = phone;
     if (rating) restaurant.rating = rating;
-    if (isOpen !== undefined) restaurant.isOpen = isOpen;
+    if (typeof isOpen !== "undefined") {
+      restaurant.isOpen = isOpen === "true" || isOpen === true;
+    }
+
     if (req.file) {
       const imageUri = await cloudinaryInstance.uploader.upload(req.file.path);
       restaurant.image = imageUri.url;
     }
-    const modifyRestaurant = await restaurant.save();
-    return res.status(200).json({
-      message: "Restaurant information has been updated",
-      modifyRestaurant,
-    });
+
+    const updatedRestaurant = await restaurant.save();
+
+    return res
+      .status(200)
+      .json({ message: "Restaurant updated Successfully", updatedRestaurant });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });

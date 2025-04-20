@@ -80,7 +80,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="min-h-screen flex flex-col md:flex-row bg-pink-600">
       <div className="hidden md:block md:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/30 z-10"></div>
         <div className="absolute inset-0 bg-noise opacity-10 z-10"></div>
@@ -100,19 +100,19 @@ const SignupPage = () => {
       </div>
 
       <div className="w-full md:w-1/2 flex items-center justify-center p-6">
-        <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl">
+        <div className="w-full max-w-lg bg-white/20 backdrop-blur-lg rounded-3xl border border-white/30 shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl">
           <div className="p-10">
             {error && (
-              <div className="mb-6 p-4 bg-pink-900/20 text-pink-100 rounded-xl border border-pink-900/30 animate-fadeIn">
+              <div className="mb-6 p-4 bg-pink-700/50 text-white rounded-xl border border-pink-800/50 animate-fadeIn">
                 {error}
               </div>
             )}
 
             <div className="text-center mb-10">
-              <div className="inline-flex items-center justify-center bg-gradient-to-r from-pink-600 to-pink-500 rounded-full w-20 h-20 mb-6 shadow-lg transform transition-all hover:scale-105">
+              <div className="inline-flex items-center justify-center bg-white rounded-full w-20 h-20 mb-6 shadow-lg transform transition-all hover:scale-105">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-white"
+                  className="h-10 w-10 text-pink-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -128,7 +128,7 @@ const SignupPage = () => {
               <h1 className="text-4xl font-serif font-bold text-white mb-2">
                 Create Account
               </h1>
-              <p className="text-gray-300 font-light">
+              <p className="text-pink-100 font-light">
                 Begin your delicious journey with us
               </p>
             </div>
@@ -138,12 +138,12 @@ const SignupPage = () => {
                 <div className="group">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-300 mb-2 group-hover:text-pink-400 transition-colors"
+                    className="block text-sm font-medium text-pink-100 mb-2 group-hover:text-white transition-colors"
                   >
                     Full Name
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-pink-400 transition-colors">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-pink-200 group-hover:text-white transition-colors">
                       <svg
                         className="h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -163,16 +163,16 @@ const SignupPage = () => {
                       type="text"
                       value={formData.name}
                       onChange={handleChange}
-                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/5 border ${
+                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/20 border ${
                         errors.name
-                          ? "border-red-500/50 focus:ring-red-500/30"
-                          : "border-white/10 focus:ring-pink-500/30"
-                      } text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:border-pink-500 transition-all duration-300`}
+                          ? "border-red-300 focus:ring-red-300/30"
+                          : "border-white/30 focus:ring-white/30"
+                      } text-white placeholder-pink-200 focus:outline-none focus:ring-4 focus:border-white transition-all duration-300`}
                       placeholder="John Doe"
                     />
                   </div>
                   {errors.name && (
-                    <p className="mt-2 text-sm text-pink-400 animate-fadeIn">
+                    <p className="mt-2 text-sm text-white animate-fadeIn">
                       {errors.name}
                     </p>
                   )}
@@ -181,12 +181,12 @@ const SignupPage = () => {
                 <div className="group">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-300 mb-2 group-hover:text-pink-400 transition-colors"
+                    className="block text-sm font-medium text-pink-100 mb-2 group-hover:text-white transition-colors"
                   >
                     Email Address
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-pink-400 transition-colors">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-pink-200 group-hover:text-white transition-colors">
                       <svg
                         className="h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -203,16 +203,16 @@ const SignupPage = () => {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/5 border ${
+                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/20 border ${
                         errors.email
-                          ? "border-red-500/50 focus:ring-red-500/30"
-                          : "border-white/10 focus:ring-pink-500/30"
-                      } text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:border-pink-500 transition-all duration-300`}
+                          ? "border-red-300 focus:ring-red-300/30"
+                          : "border-white/30 focus:ring-white/30"
+                      } text-white placeholder-pink-200 focus:outline-none focus:ring-4 focus:border-white transition-all duration-300`}
                       placeholder="you@example.com"
                     />
                   </div>
                   {errors.email && (
-                    <p className="mt-2 text-sm text-pink-400 animate-fadeIn">
+                    <p className="mt-2 text-sm text-white animate-fadeIn">
                       {errors.email}
                     </p>
                   )}
@@ -221,12 +221,12 @@ const SignupPage = () => {
                 <div className="group">
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-medium text-gray-300 mb-2 group-hover:text-pink-400 transition-colors"
+                    className="block text-sm font-medium text-pink-100 mb-2 group-hover:text-white transition-colors"
                   >
                     Phone Number
                   </label>
                   <div className="flex">
-                    <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-white/10 bg-white/5 text-gray-400 text-sm group-hover:text-pink-400 transition-colors">
+                    <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-white/30 bg-white/20 text-pink-200 text-sm group-hover:text-white transition-colors">
                       +91
                     </span>
                     <input
@@ -235,16 +235,16 @@ const SignupPage = () => {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`block w-full pl-4 pr-4 py-3.5 rounded-r-xl bg-white/5 border ${
+                      className={`block w-full pl-4 pr-4 py-3.5 rounded-r-xl bg-white/20 border ${
                         errors.phone
-                          ? "border-red-500/50 focus:ring-red-500/30"
-                          : "border-white/10 focus:ring-pink-500/30"
-                      } text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:border-pink-500 transition-all duration-300`}
+                          ? "border-red-300 focus:ring-red-300/30"
+                          : "border-white/30 focus:ring-white/30"
+                      } text-white placeholder-pink-200 focus:outline-none focus:ring-4 focus:border-white transition-all duration-300`}
                       placeholder="9876543210"
                     />
                   </div>
                   {errors.phone && (
-                    <p className="mt-2 text-sm text-pink-400 animate-fadeIn">
+                    <p className="mt-2 text-sm text-white animate-fadeIn">
                       {errors.phone}
                     </p>
                   )}
@@ -253,12 +253,12 @@ const SignupPage = () => {
                 <div className="group">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-300 mb-2 group-hover:text-pink-400 transition-colors"
+                    className="block text-sm font-medium text-pink-100 mb-2 group-hover:text-white transition-colors"
                   >
                     Password
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-pink-400 transition-colors">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-pink-200 group-hover:text-white transition-colors">
                       <svg
                         className="h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -278,16 +278,16 @@ const SignupPage = () => {
                       type="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/5 border ${
+                      className={`block w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/20 border ${
                         errors.password
-                          ? "border-red-500/50 focus:ring-red-500/30"
-                          : "border-white/10 focus:ring-pink-500/30"
-                      } text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:border-pink-500 transition-all duration-300`}
+                          ? "border-red-300 focus:ring-red-300/30"
+                          : "border-white/30 focus:ring-white/30"
+                      } text-white placeholder-pink-200 focus:outline-none focus:ring-4 focus:border-white transition-all duration-300`}
                       placeholder="••••••••"
                     />
                   </div>
                   {errors.password && (
-                    <p className="mt-2 text-sm text-pink-400 animate-fadeIn">
+                    <p className="mt-2 text-sm text-white animate-fadeIn">
                       {errors.password}
                     </p>
                   )}
@@ -300,26 +300,26 @@ const SignupPage = () => {
                     id="terms"
                     name="terms"
                     type="checkbox"
-                    className="focus:ring-pink-500 h-5 w-5 text-pink-600 bg-white/5 border-white/10 rounded focus:ring-2"
+                    className="focus:ring-white h-5 w-5 text-pink-600 bg-white/20 border-white/30 rounded focus:ring-2"
                     required
                   />
                 </div>
                 <div className="ml-3 text-sm">
                   <label
                     htmlFor="terms"
-                    className="font-medium text-gray-300 hover:text-white transition-colors"
+                    className="font-medium text-pink-100 hover:text-white transition-colors"
                   >
                     I agree to the{" "}
                     <a
                       href="#"
-                      className="text-pink-400 hover:text-pink-300 underline transition-colors"
+                      className="text-white hover:text-pink-100 underline transition-colors"
                     >
                       Terms
                     </a>{" "}
                     and{" "}
                     <a
                       href="#"
-                      className="text-pink-400 hover:text-pink-300 underline transition-colors"
+                      className="text-white hover:text-pink-100 underline transition-colors"
                     >
                       Privacy Policy
                     </a>
@@ -331,14 +331,14 @@ const SignupPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full flex justify-center items-center px-8 py-4 border border-transparent rounded-xl text-lg font-medium text-white bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-500 hover:to-pink-400 focus:outline-none focus:ring-4 focus:ring-pink-500/30 shadow-lg transform transition-all hover:scale-[1.02] active:scale-100 ${
+                  className={`w-full flex justify-center items-center px-8 py-4 border border-transparent rounded-xl text-lg font-medium text-pink-600 bg-white hover:bg-pink-50 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-lg transform transition-all hover:scale-[1.02] active:scale-100 ${
                     isSubmitting ? "opacity-80 cursor-not-allowed" : ""
                   }`}
                 >
                   {isSubmitting ? (
                     <>
                       <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-pink-600"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -385,10 +385,10 @@ const SignupPage = () => {
             <div className="mt-10">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10"></div>
+                  <div className="w-full border-t border-white/30"></div>
                 </div>
                 <div className="relative flex justify-center">
-                  <span className="px-4 bg-transparent text-sm text-gray-400">
+                  <span className="px-4 bg-transparent text-sm text-pink-200">
                     Or continue with
                   </span>
                 </div>
@@ -430,11 +430,11 @@ const SignupPage = () => {
             </div>
 
             <div className="mt-10 text-center">
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-pink-200">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-medium text-pink-400 hover:text-pink-300 underline transition-colors"
+                  className="font-medium text-white hover:text-pink-100 underline transition-colors"
                 >
                   Sign in
                 </Link>
