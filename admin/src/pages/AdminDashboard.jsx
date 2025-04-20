@@ -9,7 +9,6 @@ import {
   FiLogOut,
   FiChevronRight,
   FiCreditCard,
-  FiCheckCircle,
   FiTag
 } from "react-icons/fi";
 import axiosInstance from "../config/axiosInstance.jsx";
@@ -37,7 +36,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Sidebar */}
       <div className="w-72 bg-gradient-to-b from-gray-900 to-gray-800 text-white flex flex-col p-6 fixed inset-0 shadow-xl">
         <div className="text-3xl font-bold mb-12 flex items-center">
           <span className="bg-pink-600 text-white px-2 py-1 rounded mr-2">food</span>
@@ -69,19 +67,6 @@ const AdminDashboard = () => {
             <FiClipboard className="text-xl" />
             <span>Restaurants</span>
             {isActive("/admin/restaurants") && <FiChevronRight className="ml-auto" />}
-          </Link>
-
-          <Link
-            to="/admin/verifications"
-            className={`flex items-center gap-3 text-lg p-3 rounded-lg transition-all duration-200 ${
-              isActive("/admin/verifications") 
-                ? "bg-pink-600 text-white font-medium shadow-md"
-                : "hover:bg-gray-700 hover:text-pink-300"
-            }`}
-          >
-            <FiCheckCircle className="text-xl" />
-            <span>Verifications</span>
-            {isActive("/admin/verifications") && <FiChevronRight className="ml-auto" />}
           </Link>
 
           <Link
@@ -133,7 +118,6 @@ const AdminDashboard = () => {
         </nav>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 ml-72 p-8 overflow-auto">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6 min-h-[calc(100vh-4rem)]">

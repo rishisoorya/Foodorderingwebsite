@@ -1,114 +1,111 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function HomePage() {
-  // Popular Cuisines Carousel
-  const [currentCuisine, setCurrentCuisine] = useState(0);
   const cuisines = [
     {
       name: "Italian",
       restaurants: [
         {
           name: "La Bella Italia",
-          rating: "4.8",
-          image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+          rating: "5",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745163348/zgg8dljq8ghlykfgcnik.jpg",
         },
-        {
-          name: "Pasta Palace",
-          rating: "4.6",
-          image: "https://images.unsplash.com/photo-1600628421060-939639517883?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-          name: "Romano's",
-          rating: "4.7",
-          image: "https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        }
-      ]
+      ],
     },
     {
       name: "Japanese",
       restaurants: [
         {
           name: "Tokyo Sushi",
-          rating: "4.9",
-          image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+          rating: "5",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745163948/agb9mmjmcabejtod36xc.jpg",
         },
-        {
-          name: "Sakura House",
-          rating: "4.7",
-          image: "https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        },
-        {
-          name: "Ramen Street",
-          rating: "4.5",
-          image: "https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        }
-      ]
+      ],
     },
     {
       name: "American",
       restaurants: [
         {
           name: "Burger Joint",
-          rating: "4.5",
-          image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+          rating: "5",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745164642/fkdmromaxzwhyrbqmpm9.jpg",
         },
+      ],
+    },
+    {
+      name: "Indian",
+      restaurants: [
         {
-          name: "Steakhouse",
-          rating: "4.8",
-          image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+          name: "Malabar Cafe",
+          rating: "4.6",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745165570/mbwtxynqd9spzz8goaj8.jpg",
         },
+      ],
+    },
+    {
+      name: "Fine Dining",
+      restaurants: [
         {
-          name: "Diner 24/7",
-          rating: "4.4",
-          image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        }
-      ]
-    }
+          name: "Latest Recipe",
+          rating: "4.2",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745165981/wtcvop6qbsq0xadx5u9a.jpg",
+        },
+      ],
+    },
+    {
+      name: "Kerala",
+      restaurants: [
+        {
+          name: "Pepper House",
+          rating: "4.9",
+          image:
+            "http://res.cloudinary.com/dutf0dgga/image/upload/v1745166366/irstxwznvahpgk63mpmm.jpg",
+        },
+      ],
+    },
   ];
 
-  // Featured Restaurants Carousel
-  const [currentRestaurant, setCurrentRestaurant] = useState(0);
   const featuredRestaurants = [
     {
-      name: "The Gourmet Spot",
-      cuisine: "Fine Dining",
-      rating: "4.9",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+      name: "La Bella Italia",
+      cuisine: "Italian",
+      rating: "5",
+      image:
+        "http://res.cloudinary.com/dutf0dgga/image/upload/v1745163348/zgg8dljq8ghlykfgcnik.jpg",
     },
     {
-      name: "Seafood Haven",
-      cuisine: "Seafood",
-      rating: "4.7",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+      name: "Tokyo Sushi",
+      cuisine: "Japanese",
+      rating: "5",
+      image:
+        "http://res.cloudinary.com/dutf0dgga/image/upload/v1745163948/agb9mmjmcabejtod36xc.jpg",
     },
     {
-      name: "Vegetarian Delight",
-      cuisine: "Vegetarian",
-      rating: "4.8",
-      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
-    }
+      name: "Burger Joint",
+      cuisine: "American",
+      rating: "5",
+      image:
+        "http://res.cloudinary.com/dutf0dgga/image/upload/v1745164642/fkdmromaxzwhyrbqmpm9.jpg",
+    },
   ];
 
-  // Auto-rotate carousels
-  useEffect(() => {
-    const cuisineInterval = setInterval(() => {
-      setCurrentCuisine((prev) => (prev + 1) % cuisines.length);
-    }, 5000);
-    
-    const restaurantInterval = setInterval(() => {
-      setCurrentRestaurant((prev) => (prev + 1) % featuredRestaurants.length);
-    }, 4000);
-    
-    return () => {
-      clearInterval(cuisineInterval);
-      clearInterval(restaurantInterval);
-    };
-  }, []);
+  const foodGallery = [
+    "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+  ];
 
   return (
     <div className="bg-white">
-      {/* Hero Section */}
       <div className="bg-pink-50 p-8 md:p-12 lg:p-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -134,108 +131,110 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Cuisines Carousel */}
       <div className="py-12 max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center mb-8">Popular Cuisines</h2>
-        
-        <div className="relative h-96">
-          <div className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentCuisine * 100}%)` }}>
-            {cuisines.map((cuisine, index) => (
-              <div key={index} className="w-full flex-shrink-0 px-4">
-                <div className="text-center">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-8">{cuisine.name}</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    {cuisine.restaurants.map((restaurant, rIndex) => (
-                      <div key={rIndex} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div className="relative h-64">
-                          <img 
-                            src={restaurant.image} 
-                            alt={restaurant.name}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                            <h4 className="text-white font-bold text-lg">{restaurant.name}</h4>
-                            <div className="flex items-center text-pink-300">
-                              <span>★</span>
-                              <span className="ml-1 text-white">{restaurant.rating}</span>
-                            </div>
-                          </div>
+        <h2 className="text-2xl font-bold text-center mb-8">
+          Popular Cuisines
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {cuisines.map((cuisine, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-lg overflow-hidden"
+            >
+              <div className="h-48 overflow-hidden">
+                <img
+                  src={cuisine.restaurants[0].image}
+                  alt={cuisine.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {cuisine.name}
+                </h3>
+                <div className="space-y-4">
+                  {cuisine.restaurants.map((restaurant, rIndex) => (
+                    <div key={rIndex} className="flex items-center">
+                      <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                        <img
+                          src={restaurant.image}
+                          alt={restaurant.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{restaurant.name}</h4>
+                        <div className="flex items-center text-pink-600">
+                          <span>★</span>
+                          <span className="ml-1 text-gray-700">
+                            {restaurant.rating}
+                          </span>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="py-12 bg-pink-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            Featured Restaurants
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredRestaurants.map((restaurant, index) => (
+              <div
+                key={index}
+                className="relative rounded-2xl overflow-hidden shadow-lg group"
+              >
+                <img
+                  src={restaurant.image}
+                  alt={restaurant.name}
+                  className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-6">
+                  <h3 className="text-2xl font-bold text-white">
+                    {restaurant.name}
+                  </h3>
+                  <div className="flex items-center mt-2">
+                    <span className="bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                      {restaurant.rating} ★
+                    </span>
+                    <span className="ml-3 text-white">
+                      {restaurant.cuisine}
+                    </span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          {/* Indicators */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {cuisines.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentCuisine(index)}
-                className={`w-3 h-3 rounded-full ${currentCuisine === index ? 'bg-pink-600' : 'bg-gray-300'}`}
+        </div>
+      </div>
+
+      <div className="py-12 max-w-6xl mx-auto px-4">
+        <h2 className="text-2xl font-bold text-center mb-8">Food Gallery</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {foodGallery.map((image, index) => (
+            <div
+              key={index}
+              className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow"
+            >
+              <img
+                src={image}
+                alt={`Food ${index + 1}`}
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
               />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Featured Restaurants Carousel */}
-      <div className="py-12 bg-pink-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">Featured Restaurants</h2>
-          
-          <div className="relative">
-            <div className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentRestaurant * 100}%)` }}>
-              {featuredRestaurants.map((restaurant, index) => (
-                <div key={index} className="w-full flex-shrink-0 px-4">
-                  <div className="relative h-96 rounded-2xl overflow-hidden shadow-lg">
-                    <img 
-                      src={restaurant.image} 
-                      alt={restaurant.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8">
-                      <div className="text-white">
-                        <h3 className="text-3xl font-bold">{restaurant.name}</h3>
-                        <div className="flex items-center mt-2">
-                          <span className="bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            {restaurant.rating} ★
-                          </span>
-                          <span className="ml-3 text-white">{restaurant.cuisine}</span>
-                        </div>
-                        <Link 
-                          to="/restaurants" 
-                          className="inline-block mt-6 px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-lg transition-colors duration-300"
-                        >
-                          View Menu
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Indicators */}
-            <div className="flex justify-center mt-6 space-x-2">
-              {featuredRestaurants.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentRestaurant(index)}
-                  className={`w-3 h-3 rounded-full ${currentRestaurant === index ? 'bg-pink-600' : 'bg-gray-300'}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
       <div className="py-16 bg-pink-600">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white">Ready to order?</h2>
