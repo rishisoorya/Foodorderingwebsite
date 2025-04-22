@@ -49,17 +49,17 @@ function RestaurantOrdersPage() {
     </div>
   );
   
-  if (!data?.orders || data.orders.length === 0) return (
+  if (!data || !data.orders || data.orders.length === 0) return (
     <div className="text-center py-8 text-gray-500 text-lg">
       No orders found.
     </div>
   );
 
   const activeOrders = data.orders.filter(
-    (order) => order.status !== "delivered"
+    (order) => order.status && order.status !== "delivered"
   );
   const deliveredOrders = data.orders.filter(
-    (order) => order.status === "delivered"
+    (order) => order.status && order.status === "delivered"
   );
 
   const renderOrderCard = (order, isDelivered = false) => (
@@ -69,7 +69,6 @@ function RestaurantOrdersPage() {
         isDelivered ? "bg-pink-50" : "bg-white"
       }`}
     >
-      {/* User Info */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
         <div>
           <h2 className="text-xl font-bold text-pink-800">
@@ -84,15 +83,14 @@ function RestaurantOrdersPage() {
         </div>
         <div className="mt-2 md:mt-0">
           <p className="text-sm text-gray-600">
-            <span className="font-medium">Customer:</span> {order.user.name}
+            <span className="font-medium">Customer:</span> {order.user?.name || "N/A"}
           </p>
           <p className="text-sm text-gray-600">
-            <span className="font-medium">Phone:</span> {order.user.phone}
+            <span className="font-medium">Phone:</span> {order.user?.phone || "N/A"}
           </p>
         </div>
       </div>
 
-      {/* Status Update */}
       {!isDelivered && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
           <select
@@ -116,7 +114,6 @@ function RestaurantOrdersPage() {
         </div>
       )}
 
-      {/* Food Items */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-pink-800 mb-3">Order Items</h3>
         <div className="space-y-4">
@@ -141,14 +138,13 @@ function RestaurantOrdersPage() {
         </div>
       </div>
 
-      {/* Delivery Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
         <div className="bg-pink-50 p-4 rounded-lg">
           <h4 className="font-medium text-pink-700 mb-2">Delivery Address</h4>
           <div className="text-sm text-gray-700 space-y-1">
-            <p>{order.deliveryAddress?.street}</p>
-            <p>{order.deliveryAddress?.city}, {order.deliveryAddress?.state}</p>
-            <p>Phone: {order.deliveryAddress?.phone}</p>
+            <p>{order.deliveryAddress?.street || "N/A"}</p>
+            <p>{order.deliveryAddress?.city || "N/A"}, {order.deliveryAddress?.state || "N/A"}</p>
+            <p>Phone: {order.deliveryAddress?.phone || "N/A"}</p>
           </div>
         </div>
 
@@ -157,17 +153,17 @@ function RestaurantOrdersPage() {
           <div className="text-sm space-y-2">
             <div className="flex justify-between">
               <span>Subtotal:</span>
-              <span>₹{order.totalAmount}</span>
+              <span>₹{order.totalAmount || 0}</span>
             </div>
             {order.coupon?.code && (
               <div className="flex justify-between">
                 <span>Coupon ({order.coupon.code}):</span>
-                <span className="text-green-600">-₹{(order.totalAmount - order.finalPrice).toFixed(2)}</span>
+                <span className="text-green-600">-₹{(order.totalAmount - (order.finalPrice || 0)).toFixed(2)}</span>
               </div>
             )}
             <div className="flex justify-between font-medium border-t border-pink-200 pt-2 mt-2">
               <span>Total:</span>
-              <span className="text-pink-700">₹{order.finalPrice}</span>
+              <span className="text-pink-700">₹{order.finalPrice || 0}</span>
             </div>
           </div>
         </div>
@@ -177,7 +173,6 @@ function RestaurantOrdersPage() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      {/* Active Orders */}
       <div className="mb-10">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-pink-800">Active Orders</h1>
@@ -197,7 +192,6 @@ function RestaurantOrdersPage() {
         )}
       </div>
 
-      {/* Order History Toggle */}
       <div className="text-center my-8">
         <button
           onClick={() => setShowHistory(!showHistory)}
@@ -207,7 +201,6 @@ function RestaurantOrdersPage() {
         </button>
       </div>
 
-      {/* Delivered Orders */}
       {showHistory && (
         <div className="mt-8">
           <div className="flex justify-between items-center mb-6">
